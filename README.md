@@ -28,7 +28,7 @@ import xx from 'mtl-core/xx';
 ```
 $ git clone git@github.com:mtl-team/mtl-core.git
 $ cd mtl-core && npm install
-``
+```
 
 ```
 # 开发调试
