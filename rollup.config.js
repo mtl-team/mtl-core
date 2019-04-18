@@ -9,31 +9,7 @@ export default [
     output: {
       file: 'dist/mtl-core.js',
       format: 'umd',
-      name: 'MTL'
-    },
-    external: [
-      ...Object.keys(pkg.dependencies || {}),
-      ...Object.keys(pkg.peerDependencies || {})
-    ],
-    
-    plugins: [
-      resolve(),
-      babel({
-        runtimeHelpers: true,
-        exclude: [
-              'node_modules/**',
-               '*.json'
-        ],// only transpile our source code
-      }),
-      commonjs()
-    ]
-  },
-  {
-    input: './src/summer/index.js',
-    output: {
-      file: 'dist/summer.js',
-      format: 'umd',
-      name: 'summer'
+      name: 'mtl'
     },
     external: [
       ...Object.keys(pkg.dependencies || {}),

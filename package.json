@@ -4,8 +4,7 @@
   "description": "mtl.js ",
   "main": "lib/mtl.js",
   "scripts": {
-    "clean": "rimraf lib dist es",
-    "es": "babel -w src -d lib",
+    "clean": "rimraf lib dist",
     "dev": "rollup -c -w",
     "dev:map": "rollup -c -w -m",
     "build": "rollup -c "
