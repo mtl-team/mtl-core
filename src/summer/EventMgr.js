@@ -1,3 +1,5 @@
+'use strict';
+
 var EventMgr = function () {
     this._events = {};
 };
@@ -10,7 +12,7 @@ EventMgr.prototype.on = function (evtName, handler) {
 EventMgr.prototype.off = function (evtName, handler) {
     var handlers = this._events[evtName];
     if (typeof handler == "undefined") {
-        delete handlers;
+        // delete handlers;
     } else {
         var index = -1;
         for (var i = 0, len = handlers.length; i < len; i++) {

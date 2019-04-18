@@ -8,7 +8,7 @@
     "es": "babel -w src -d lib",
     "dev": "rollup -c -w",
     "dev:map": "rollup -c -w -m",
-    "build": "rollup -c"
+    "build": "rollup -c "
   },
   "repository": {
     "type": "git",
@@ -47,13 +47,6 @@
     "rollup-watch": "^4.3.1"
   },
   "dependencies": {
-    "@babel/runtime": "^7.3.4",
-    "axios": "^0.18.0",
-    "mini-store": "^2.0.0",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
-    "ref-core": "0.3.3-beta",
-    "ref-multiple-table-ui": "^1.0.4",
-    "tinper-bee": "^2.0.0-alpha.9"
+    "@babel/runtime": "^7.3.4"
   }
 }

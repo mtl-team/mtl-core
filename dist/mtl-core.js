@@ -1,7 +1,8 @@
-(function (factory) {
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  factory();
-}(function () { 'use strict';
+  (global = global || self, global.MTL = factory());
+}(this, function () { 'use strict';
 
   // 加载 .js 文件
   function loadJsFile(src) {
@@ -14,6 +15,10 @@
       head.appendChild(script);
     });
   }
+  /**
+   * MTL Core JS
+   */
+
 
   var MTL =
   /*#__PURE__*/
@@ -87,11 +92,11 @@
 
     _proto.loadJsapi = function loadJsapi() {
       if (this.platform == 'wx') {
-        loadJsFile(this.jsFileDir + '/mtl.wx.js');
+        loadJsFile(this.jsFileDir + '/mtl/mtl.wx.js');
       } else if (this.platform == 'iPhone') {
-        loadJsFile(this.jsFileDir + '/mtl.ios.js');
+        loadJsFile(this.jsFileDir + '/mtl/mtl.ios.js');
       } else if (this.platform == 'Android' || this.platform.includes('Linux')) {
-        loadJsFile(this.jsFileDir + '/mtl.android.js');
+        loadJsFile(this.jsFileDir + '/mtl/mtl.android.js');
       }
 
       (window.mtl_ready || function () {})();
@@ -100,6 +105,8 @@
     return MTL;
   }();
 
-  undefined.mtl = new MTL();
+  var MTLCore = new MTL();
+
+  return MTLCore;
 
 }));

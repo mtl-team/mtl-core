@@ -10,6 +10,9 @@ function loadJsFile(src) {
   });
 }
 
+/**
+ * MTL Core JS
+ */
 class MTL {
   constructor() {
 
@@ -75,15 +78,18 @@ class MTL {
 
   loadJsapi() {
     if (this.platform == 'wx') {
-      loadJsFile(this.jsFileDir + '/mtl.wx.js')
+      loadJsFile(this.jsFileDir + '/mtl/mtl.wx.js')
     }
     else if (this.platform == 'iPhone') {
-      loadJsFile(this.jsFileDir + '/mtl.ios.js')
+      loadJsFile(this.jsFileDir + '/mtl/mtl.ios.js')
     }
     else if (this.platform == 'Android' || this.platform.includes('Linux')) {
-      loadJsFile(this.jsFileDir + '/mtl.android.js')
+      loadJsFile(this.jsFileDir + '/mtl/mtl.android.js')
     }
     (window.mtl_ready || function() {})()
   }
 }
-this.mtl = new MTL()
+
+let MTLCore = new MTL()
+
+export default MTLCore

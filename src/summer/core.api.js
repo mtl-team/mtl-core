@@ -60,7 +60,8 @@ s.window = {
         } else if ($summer.os == "android") {
             if (json.event && json.handler) {
                 var handler = json.handler.replace(/\(|\)/g,'');
-                document.addEventListener(json.event, eval("("+ handler +")"), false);
+                // 暂时注释，eval 编译报错
+                // document.addEventListener(json.event, eval("("+ handler +")"), false);
             }
         }
     },

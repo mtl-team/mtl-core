@@ -7,10 +7,23 @@
 var $s = {};
 var s = {$: $s};
 
-import './base.extend'
-import './base.dom'
-import './base.api'
+// u = window.$summer || {};
+// w.$summer = w.$summer || {};
+// w.summer = w.summer || {};
+// w.api = w.summer;
 
+import './base.extra'
+import './base.api'
+import './base.dom'
+import './codova.init'
+import './bridge.loadplugin'
+import './core.api'
+import './bridge'
+import './emm'
+import './im'
 
 window.$summer = $s;
 window.summer = s;
+
+//debug
+w.$summer.__debug = false;
