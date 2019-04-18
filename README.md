@@ -17,5 +17,26 @@ $ npm i mtl-core -S
 ```
 import xx from 'mtl-core/xx';
 
+```
 
+## API 文档
+
+稍候...
+
+
+## 参与贡献
+
+```
+$ git clone git@github.com:mtl-team/mtl-core.git
+$ cd mtl-core && npm install
+``
+
+```
+# 开发调试
+$ npm run dev
+
+# 构建出lib资源
+$ npm run es
+# 构建出dist资源
+$ npm run build
 ```
