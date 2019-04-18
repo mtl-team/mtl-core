@@ -1,8 +1,8 @@
 {
   "name": "mtl-core",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "mtl.js ",
-  "main": "lib/mtl.js",
+  "main": "dist/mtl-core.js",
   "scripts": {
     "clean": "rimraf lib dist",
     "dev": "cross-env NODE_ENV=dev rollup -c -w",
