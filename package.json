@@ -1,11 +1,11 @@
 {
   "name": "mtl-core",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "mtl.js ",
   "main": "lib/mtl.js",
   "scripts": {
     "clean": "rimraf lib dist es",
-    "es": "babel -w lib -d es",
+    "es": "babel -w src -d lib",
     "dev": "rollup -c -w",
     "dev:map": "rollup -c -w -m",
     "build": "rollup -c"
@@ -20,7 +20,6 @@
   ],
   "author": "yonyou mtl team",
   "license": "ISC",
-
   "bugs": {
     "url": "https://github.com/mtl-team/mtl-core/issues"
   },

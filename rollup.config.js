@@ -1,8 +1,6 @@
-// rollup.config.js
 import resolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
-// import json from 'rollup-plugin-json';
 import pkg from './package.json'
 import postcss from 'rollup-plugin-postcss';
 
@@ -11,8 +9,9 @@ import simplevars from 'postcss-simple-vars';
 import nested from 'postcss-nested';
 import cssnext from 'postcss-cssnext';
 import cssnano from 'cssnano';
+
 export default {
-  input: 'lib/index.js',
+  input: 'src/mtl.js',
   output: {
     file: 'dist/mtl-core.js',
     format: 'umd',
