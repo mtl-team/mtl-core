@@ -4,7 +4,6 @@
 
 [![build status](https://img.shields.io/travis/mtl-team/mtl-core/master.svg?style=flat-square)](https://travis-ci.org/mtl-team/mtl-core) [![npm version](https://img.shields.io/npm/v/mtl-core.svg?style=flat-square)](https://www.npmjs.com/package/mtl-core)
 [![npm downloads](https://img.shields.io/npm/dm/mtl-core.svg?style=flat-square)](https://www.npmjs.com/package/mtl-core)
-[![redux channel on discord](https://img.shields.io/badge/discord-redux@reactiflux-61DAFB.svg?style=flat-square)](http://www.reactiflux.com)
 
 ## 如何使用
 
