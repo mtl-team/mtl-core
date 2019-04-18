@@ -1,10 +1,10 @@
 # mtl-core (多端化能力SDK)
 
-## 关键特性
+`mtl-core` 是 `MTL` 多端开发解决方案的基础 `JSSDK`，内置一系列与多端设备的交互、访问能力，多端协同能力，智能化交互能力等，可以简单通过链接的方式即可让应用轻松接入。在 `mtl-core` 之上还提供了多端 [UI 组件]()，形成完整开发体验。
 
-- 设备访问能力：定位、打电话、打开相机、录音等。（summer.js 默认包含）
-- 多端协同能力：投票等
-- 智能化能力：VUI等
+[![build status](https://img.shields.io/travis/mtl-team/mtl-core/master.svg?style=flat-square)](https://travis-ci.org/mtl-team/mtl-core) [![npm version](https://img.shields.io/npm/v/mtl-core.svg?style=flat-square)](https://www.npmjs.com/package/mtl-core)
+[![npm downloads](https://img.shields.io/npm/dm/mtl-core.svg?style=flat-square)](https://www.npmjs.com/package/mtl-core)
+[![redux channel on discord](https://img.shields.io/badge/discord-redux@reactiflux-61DAFB.svg?style=flat-square)](http://www.reactiflux.com)
 
 ## 如何使用
 
