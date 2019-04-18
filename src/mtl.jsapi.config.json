@@ -1,0 +1,6 @@
+{
+  "access_token_source": "debug",
+  "appid": "wxfa55781e9d53c490",
+  "secret": "d90be7afe3f479339211f6db3ee42f7e",
+  "access_token_url": "获取 access_token 的 url"
+}
