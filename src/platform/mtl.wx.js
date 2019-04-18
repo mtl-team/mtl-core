@@ -1,4 +1,6 @@
-!(function (mtl) {
+
+export default function(){
+
   // const defaultTicketServer = "https://mdoctor.yonyoucloud.com/wechat/api/getticket"
   const defaultTicketServer = "http://10.3.13.9:88/wechat/api/getticket"
   const jsapi_list = [
@@ -137,9 +139,4 @@
     mtl._configPermission = _wx_configPermission;
   }
 
-  if (mtl == null) {
-    return;
-  }
-  loadJsapi(mtl)
-
-})(this.mtl);
+}

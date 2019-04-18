@@ -1,4 +1,4 @@
-!(function (mtl) {
+export default function(){
 
   const jsapi_list = [
     'startRecord',
@@ -22,7 +22,6 @@
     'scanQRCode',
   ]
 
-  function loadJsapi(mtl) {
     let miniProgramApi = [
       'navigateBack',
       'navigateTo',
@@ -62,11 +61,5 @@
         resolve('Android 无需授权')
       })
     }.bind(mtl);
-  }
 
-  if (mtl == null) {
-    return;
   }
-  loadJsapi(mtl)
-
-})(this.mtl);

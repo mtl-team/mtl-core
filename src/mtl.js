@@ -1,14 +1,20 @@
-// 加载 .js 文件
-function loadJsFile(src) {
-  return new Promise(resolve => {
-    let head = document.head;
-    let script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = src;
-    script.onload = resolve;
-    head.appendChild(script);
-  });
-}
+import './summer/index'
+
+import MTLAndroid from './platform/mtl.android'
+import MTLIOS from './platform/mtl.ios'
+import MTLWX from './platform/mtl.wx'
+
+// // 加载 .js 文件
+// function loadJsFile(src) {
+//   return new Promise(resolve => {
+//     let head = document.head;
+//     let script = document.createElement('script');
+//     script.type = 'text/javascript';
+//     script.src = src;
+//     script.onload = resolve;
+//     head.appendChild(script);
+//   });
+// }
 
 /**
  * MTL JS Loader
@@ -78,13 +84,16 @@ class MTL {
 
   loadJsapi() {
     if (this.platform == 'wx') {
-      loadJsFile(this.jsFileDir + '/platform/mtl.wx.js')
+      // loadJsFile(this.jsFileDir + '/platform/mtl.wx.js')
+      MTLWX()
     }
     else if (this.platform == 'iPhone') {
-      loadJsFile(this.jsFileDir + '/platform/mtl.ios.js')
+      // loadJsFile(this.jsFileDir + '/platform/mtl.ios.js')
+      MTLIOS()
     }
     else if (this.platform == 'Android' || this.platform.includes('Linux')) {
-      loadJsFile(this.jsFileDir + '/platform/mtl.android.js')
+      // loadJsFile(this.jsFileDir + '/platform/mtl.android.js')
+      MTLAndroid()
     }
     (window.mtl_ready || function() {})()
   }

@@ -1,4 +1,4 @@
-!(function (mtl) {
+export default function(){
 
   const jsapi_list = [
     'startRecord',
@@ -59,9 +59,4 @@
     }.bind(mtl);
   }
 
-  if (mtl == null) {
-    return;
-  }
-  loadJsapi(mtl)
-
-})(this.mtl);
+}
