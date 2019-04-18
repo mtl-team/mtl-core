@@ -1,3 +1,6 @@
+// JavaScript Base Type Extra API
+
+
 /**
  * 删除左右两端的空格
  */
