@@ -1,3 +1,5 @@
+let e = {};
+
 e.writeConfig = function (json, successFn, errFn) {
     s.callService("UMEMMService.writeConfig", json, false);
 
@@ -136,3 +138,5 @@ e.getLocalApps = function (json, successFn, errFn) {
     json["error"] = errFn;
     return s.callService('UMEMMService.getLocalApps', json, false);
 };
+
+export default e; 

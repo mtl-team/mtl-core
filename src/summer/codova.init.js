@@ -10,19 +10,19 @@ w.api = w.summer;
     try {
         var summerDOMContentLoaded = function () {
             document.addEventListener('DOMContentLoaded', function () {
-                summer.trigger("init");
-                summer.pageParam = window.localStorage;
+                w.summer.trigger("init");
+                w.summer.pageParam = window.localStorage;
                 if (typeof summerready == "function")
                     summerready();
                 if (typeof summerReady == "function")
                     summerReady();
-                summer.trigger("ready");
-                summer.trigger("aftershowwin");
+                w.summer.trigger("ready");
+                w.summer.trigger("aftershowwin");
             }, false);
         }
 
         if ($summer.os == "pc" || !window.summerBridge) {
-            summer.__debug = true;
+            w.summer.__debug = true;
             console.log("run by file:// protocol in debug Mode");
             summerDOMContentLoaded();
         } else {
@@ -66,10 +66,10 @@ w.api = w.summer;
                 w.summer.cordova = w.cordova;
 
                 document.addEventListener('deviceready', function () {
-                    summer.trigger("init");//summer.on('init',function(){})
+                    w.summer.trigger("init");//summer.on('init',function(){})
 
                     //1、先获取页面参数123
-                    summer.winParam(function (ret) {
+                    w.summer.winParam(function (ret) {
                         //希望返回
                         var ctx = {
                             systemType: "android",//"ios"
@@ -97,16 +97,16 @@ w.api = w.summer;
 
                         }
                         //alert($summer.jsonToStr(ret));
-                        summer.pageParam = ret;//put the param in summer
-                        if (summer.autoShowWin !== false) {
-                            summer.showWin({});
+                        w.summer.pageParam = ret;//put the param in summer
+                        if (w.summer.autoShowWin !== false) {
+                            w.summer.showWin({});
                         }
-                        summer.getOpenWinTime({}, function(ret) {
+                        w.summer.getOpenWinTime({}, function(ret) {
                             var APMJSON = {
-                                "windowid": summer.getSysInfo().winId,
+                                "windowid": w.summer.getSysInfo().winId,
                                 "startTime": ret,
                                 "endTime": new Date().getTime(),
-                                "app_version": summer.getVersion().versionName
+                                "app_version": w.summer.getVersion().versionName
                             };
                             var APMPARAMS = ["FeLoad", APMJSON];
                             console.log(APMPARAMS);
@@ -116,15 +116,15 @@ w.api = w.summer;
                             summerready();
                         else if (typeof summerReady == "function")
                             summerReady();
-                        summer.trigger("ready");
+                        w.summer.trigger("ready");
 
-                        summer.trigger("aftershowwin");
+                        w.summer.trigger("aftershowwin");
                     });
                 }, false);
 
             };
             _script.onerror = function (e) {
-                summer.__debug = true;
+                w.summer.__debug = true;
                 console.log("run by http:// protocol in debug Mode");
                 summerDOMContentLoaded();
             };

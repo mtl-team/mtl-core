@@ -10,6 +10,8 @@
 
 
 //1、兼容Android
+let w = window;
+
 if (w.adrinvoker) alert(w.adrinvoker);
 var adrinvoker = {};
 if (w.adrinvoker && w.adrinvoker.call2) alert(w.adrinvoker.call2);
@@ -89,7 +91,7 @@ if (typeof UM_callNativeServiceNoraml == "undefined") {
 w.UM_callNativeServiceNoraml = UM_callNativeServiceNoraml;
 
 //3、
-s.callSync = function (serivceName, strJson) {
+let callSync = function (serivceName, strJson) {
     var strParam = strJson;
     if (typeof strJson == "object") {
         strParam = JSON.stringify(strJson);
@@ -106,7 +108,7 @@ s.callSync = function (serivceName, strJson) {
     }
 };
 //20160815
-s.callCordova = function (cordovaPlugName, plugFnName, json, successFn, errFn) {
+let callCordova = function (cordovaPlugName, plugFnName, json, successFn, errFn) {
     if (this.canrequire() && !this.__debug) {
         var plug = this.cordova.require(cordovaPlugName);
         if (plug && plug[plugFnName]) {
@@ -120,3 +122,8 @@ s.callCordova = function (cordovaPlugName, plugFnName, json, successFn, errFn) {
         console.log("the cordova plug[" + cordovaPlugName + "]'s method[" + plugFnName + "] executed!");
     }
 };
+
+export { 
+    callSync,
+    callCordova
+}

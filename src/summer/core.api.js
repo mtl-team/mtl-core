@@ -1,7 +1,6 @@
-if (!s) {
-    s = {};
-    w.summer = s;
-}
+
+let s = {}
+
 s.window = {
     openFrame: function (json, successFn, errFn) {
         json["animation"] = json["animation"] || {};
@@ -493,3 +492,6 @@ s.comleteRef = function (json) {
     });
     s.closeWin();
 };
+
+
+export default s;

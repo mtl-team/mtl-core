@@ -1,8 +1,4 @@
-w.$__cbm = {};
-if (!s) {
-    s = {};
-    w.summer = s;
-}
+let s = {}
 //----------------------------------------------------------------------
 s.UMService = {
     // 统一API，summer.callService(), supported by dsl and summer
@@ -905,3 +901,5 @@ s.getNativeLocation = function (json,successFn, errFn) {
         }
         return navigator.geolocation.getCurrentPosition(successFn, errFn);
     };
+
+    export default s;   

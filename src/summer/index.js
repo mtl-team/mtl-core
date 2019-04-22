@@ -13,17 +13,28 @@ var s = {$: $s};
 // w.api = w.summer;
 
 import './base.extra'
-import './base.api'
+import * as u from './base.api'
 import './base.dom'
 import './codova.init'
-import './bridge.loadplugin'
-import './core.api'
-import './bridge'
-import './emm'
+import { callSync, callCordova } from './bridge.loadplugin'
+import * as CoreAPI from './core.api'
+import * as BridgeAPI from './bridge'
+import e from './emm'
 import './im'
+
+s.callSync = callSync
+s.callCordova = callCordova
+console.log(CoreAPI);
+console.log(BridgeAPI);
+console.log(u);
+
+Object.assign(s, CoreAPI.default,BridgeAPI.default,u.default); //u
 
 window.$summer = $s;
 window.summer = s;
+window.emm = e;
 
 //debug
-w.$summer.__debug = false;
+window.$summer.__debug = false;
+
+export default summer;

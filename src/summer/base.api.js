@@ -1,4 +1,4 @@
-var u = window.$summer || {};
+var u = {};
 var isAndroid = (/android/gi).test(navigator.appVersion);
 
 u.os = (function (env) {
@@ -141,5 +141,8 @@ window.$isJSONObject = u.isJSONObject;
 window.$isJSONArray = u.isJSONArray;
 window.$isFunction = u.isFunction;
 window.$isEmpty = u.isEmpty;
-window.$summer = window.$summer || u;
+
+// window.$summer = window.$summer || u;
+
+export default u;
 
