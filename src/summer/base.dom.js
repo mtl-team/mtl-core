@@ -433,3 +433,5 @@ u.fixStatusBar = function (el) {
 
 window.$summer = window.$summer || u;
 window.$api = window.$summer;
+
+export default u
