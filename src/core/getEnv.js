@@ -7,4 +7,7 @@ if (platform == 'MacIntel' || userAgent.includes('miniProgram')) {
   platform = 'wx'
 }
 
+// export const isAlipay = false;
+// export const isWebApp = false;
+
 export default platform
