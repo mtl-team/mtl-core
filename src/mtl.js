@@ -1,6 +1,26 @@
 import platform from './core/getEnv'
 import wx_apilist from './platform/wx/mtl.wx'
 
+function prepareNamespace(symbolPath, context) {
+  if (!symbolPath) {
+    return context;
+  }
+  let parts = symbolPath.split('.');
+  let cur = context;
+  for (let i = 0, part; part = parts[i]; ++i) {
+    cur = cur[part] = cur[part] || {};
+  }
+  return cur;
+}
+
+const merge = (target, source) => {
+  for (let key of Object.keys(source)) {
+    if (source[key] instanceof Object) Object.assign(source[key], merge(target[key], source[key]))
+  }
+  Object.assign(target || {}, source)
+  return target
+}
+
 class MTL {
   constructor() {
     this.apilist = []
@@ -16,7 +36,15 @@ class MTL {
     }
     this.apilist[api] = fn
     if (symbolPath) {
-      // TODO:
+      prepareNamespace(symbolPath, mtl)
+      let obj = {}
+      let cur = obj;
+      let parts = symbolPath.split('.');
+      for (let part of parts) {
+        cur = cur[part] = {}
+      }
+      cur[api] = fn
+      merge(mtl, obj)
     }
     else {
       mtl[api] = fn
