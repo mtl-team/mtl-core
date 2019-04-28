@@ -1,0 +1,6 @@
+{
+  "access_token_source": "debug",
+  "access_token_url": "用户自定义 access_token 请求接口",
+  "appid": "<appid>",
+  "secret": "<secret>"
+}

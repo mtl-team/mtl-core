@@ -1,101 +1,120 @@
 
-import { jsapi_list } from '../../core/base.apilist'
-import { defaultTicketServer } from '../../core/constants'
-import data from './mtl.jsapi.config.json'
+import config from './mtl.wx.config.json'
+import sha1 from 'sha1'
+import apilist from './mtl.wx.apilist'
+
+// 请求微信 ticket 默认接口
+// const defaultTicketServer = 'https://mdoctor.yonyoucloud.com/wechat/api/getticket'
+const defaultTicketServer = 'http://10.3.13.9:88/wechat/api/getticket'
+
+let wx_permissionStatus = 0
+let wx = window.wx
 
 // http 请求
-function get(url) {
-  return new Promise((resolve, reject) => {
-    let request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-      if (request.readyState === 4) {
-        if (request.status === 200) {
-          return resolve(request.responseText);
+  function httpGet(url) {
+    return new Promise((resolve, reject) => {
+      let request = new XMLHttpRequest();
+      request.onreadystatechange = function () {
+        if (request.readyState === 4) {
+          if (request.status === 200) {
+            return resolve(request.responseText);
+          }
+          else {
+            return reject(request.status);
+          }
         }
         else {
-          return reject(request.status);
+          // HTTP请求还在继续...
         }
       }
-      else {
-        // HTTP请求还在继续...
-      }
-    }
-    request.open('GET', url);
-    request.send();
+      request.open('GET', url);
+      request.send();
+    });
+  }
+
+function loadJsFile(src) {
+  return new Promise(resolve => {
+    let head = document.head;
+    let script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = src;
+    script.onload = resolve;
+    head.appendChild(script);
   });
 }
 
-// 读取 json 文件
-function readJsonFile(file) {
+function getTicket({ access_token_source: source, access_token_url: url, appid, secret }) {
   return new Promise((resolve, reject) => {
-    let request = new XMLHttpRequest();
-    request.overrideMimeType("application/json");
-    request.open("GET", file, true);
-    request.onreadystatechange = function () {
-      if (request.readyState === 4) {
-        if (request.status === 200) {
-          return resolve(request.responseText);
-        }
-        else {
-          return reject(request.status);
-        }
-      }
-    }
-    request.send(null);
-  })
-}
-
-// 请求 ticket
-function getJsApiTicket(data) {
-  return new Promise((resolve, reject) => {
-    let url = null
-    if (data.access_token_source == 'debug') {
+    if (source == 'debug') {
       url = defaultTicketServer + "?access_token_source=debug"
     }
-    else if (data.access_token_source == 'url') {
-      url = data.url
-    }
-    else if (data.access_token_source == 'secret') {
-      let appid = data.appid
-      let secret = data.secret
+    else if (source == 'secret') {
       url = `${defaultTicketServer}?access_token_source=secret&appid=${appid}&secret=${secret}`
     }
-    get(url).then(resolve).catch(reject);
+    httpGet(url).then(resolve).catch(reject)
   });
 }
 
-export default async function _wx_configPermission() {
-  let dir = mtl.jsFileDir;
-  await loadJsFile(dir + '/mtl.sha1.bundle.js')
-  // let data = await readJsonFile(dir + '/mtl.jsapi.config.json')
-
-  return getJsApiTicket(JSON.parse(data)).then(res => {
-    return new Promise((resolve, reject) => {
-      let json = JSON.parse(res)
-      let { status, msg, data } = json
-      if (status == 0) {
-        reject(msg)
-        return
-      }
-      let { appid, ticket } = data
-      let url = document.URL
-      let nonceStr = 'Wm3WZYTPz0wzccnW'
-      let timestamp = new Date().getTime()
-      let encodingStr = `jsapi_ticket=${ticket}&noncestr=${nonceStr}&timestamp=${timestamp}&url=${url}`
-      let signature = window.sha1(encodingStr);
-
-      let config = {
-        debug: false,         // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-        appId: appid,         // 必填，公众号的唯一标识
-        timestamp: timestamp, // 必填，生成签名的时间戳
-        nonceStr: nonceStr,   // 必填，生成签名的随机串
-        signature: signature, // 必填，签名
-        jsApiList: jsapi_list // 必填，需要使用的JS接口列表
-      }
-      wx.config(config);
-      wx.ready(resolve);
-      wx.error(reject);
-    })
-  })
+// 请求微信 jssdk 权限
+async function configPermission() {
+  const res = await getTicket(config);
+  let { status, msg, data } = JSON.parse(res);
+  if (status == 0) {
+    return false;
+  }
+  let { appid, ticket } = data;
+  let url = document.URL;
+  let nonceStr = 'Wm3WZYTPz0wzccnW';
+  let timestamp = new Date().getTime();
+  let encodingStr = `jsapi_ticket=${ticket}&noncestr=${nonceStr}&timestamp=${timestamp}&url=${url}`;
+  let signature = sha1(encodingStr);
+  return new Promise((resolve, reject) => {
+    wx.config({
+      debug: false,
+      appId: appid,
+      timestamp: timestamp,
+      nonceStr: nonceStr,
+      signature: signature,
+      jsApiList: apilist.base // 必填，需要使用的JS接口列表
+    });
+    wx.ready(resolve);
+    wx.error(reject);
+  });
 }
 
+function load() {
+  let apiObjects = apilist.base.map(api => {
+    return {
+      api: api,
+      fn: (obj) => {
+        let fn = wx[api]
+        let status = wx_permissionStatus || 0  // 0.初始状态;1.成功;-1:失败;
+        if (status == 1) {
+          fn(obj)
+        }
+        else {
+          configPermission().then(() => {
+            wx_permissionStatus = 1
+            fn(obj)
+          }).catch(err => {
+            wx_permissionStatus = -1
+            if (obj.error) {
+              obj.error(err)
+            }            
+          })
+        }
+      }
+    }
+  })
+  apiObjects = Object.assign(apiObjects, apilist.miniProgram.map(api => {
+    return {
+      api: api,
+      fn: wx.miniProgram[api]
+    }
+  }))
+  return apiObjects
+}
+
+let apiObjects = load()
+
+export default apiObjects

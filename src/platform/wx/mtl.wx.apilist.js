@@ -1,5 +1,5 @@
-// common api list
-const miniProgramApi = [
+export default {
+  miniProgram: [
     'navigateBack',
     'navigateTo',
     'redirectTo',
@@ -7,9 +7,8 @@ const miniProgramApi = [
     'reLaunch',
     'postMessage',
     'getEnv'
-  ]
-
-const jsapi_list = [
+  ],
+  base: [
     'startRecord',
     'stopRecord',
     'onVoiceRecordEnd',
@@ -29,9 +28,5 @@ const jsapi_list = [
     'openLocation',
     'getLocation',
     'scanQRCode',
-]
-
-export default { 
-    jsapi_list,
-    miniProgramApi
+  ]
 }

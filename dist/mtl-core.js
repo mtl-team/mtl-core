@@ -1,1 +1,1219 @@
-!function(e,r){"object"==typeof exports&&"undefined"!=typeof module?module.exports=r():"function"==typeof define&&define.amd?define(r):(e=e||self).mtl=r()}(this,function(){"use strict";String.prototype.trim=function(){return this.replace(/(^\s*)|(\s*$)/g,"")},String.prototype.ltrim=function(){return this.replace(/(^\s*)/g,"")},String.prototype.rtrim=function(){return this.replace(/(\s*$)/g,"")},String.prototype.isNullOrEmpty=function(){return null==this||"string"==typeof this&&""===this},Number.prototype.add=function(e){return function(e,r){var t,n,i;try{t=(""+e).split(".")[1].length}catch(e){t=0}try{n=(""+r).split(".")[1].length}catch(e){n=0}return(e*(i=Math.pow(10,Math.max(t,n)))+r*i)/i}(e,this)},Number.prototype.sub=function(e){return this.add(this,-e)},Number.prototype.mul=function(e){return function(e,r){var t=0,n=""+e,i=""+r;try{t+=n.split(".")[1].length}catch(e){}try{t+=i.split(".")[1].length}catch(e){}return+n.replace(".","")*+i.replace(".","")/Math.pow(10,t)}(e,this)},Number.prototype.div=function(e){return function(e,r){var t=0,n=0;try{t=(""+e).split(".")[1].length}catch(e){}try{n=(""+r).split(".")[1].length}catch(e){}if(Math)return+(""+e).replace(".","")/+(""+r).replace(".","")*pow(10,n-t)}(this,e)},Array.prototype.remove=function(e){return isNaN(e)||0>e||e>=this.length?this:(this.splice(e,1),this)},Array.prototype.remove2=function(e){return isNaN(e)?this:0>e||e>=this.length?this:this.slice(0,e).concat(this.slice(e+1,this.length))},Array.prototype.remove3=function(e){if(isNaN(e)||e>this.length)return!1;for(var r=0,t=0;this.length>r;r++)this[r]!=this[e]&&(this[t++]=this[r]);this.length-=1},Array.prototype.insert=function(e,r){return this.splice(e,0,r)},Date.prototype.format=function(e){var r={"M+":this.getMonth()+1,"d+":this.getDate(),"h+":this.getHours(),"m+":this.getMinutes(),"s+":this.getSeconds(),"q+":Math.floor((this.getMonth()+3)/3),S:this.getMilliseconds()};for(var t in/(y+)/.test(e)&&(e=e.replace(RegExp.$1,(this.getFullYear()+"").substr(4-RegExp.$1.length))),r)RegExp("("+t+")").test(e)&&(e=e.replace(RegExp.$1,1==RegExp.$1.length?r[t]:("00"+r[t]).substr((""+r[t]).length)));return e};var r,t=window.$summer||{};navigator;t.os=0>(r={info:function(){var e=navigator.userAgent;navigator;return{webKit:e.indexOf("AppleWebKit")>-1,mobile:!!e.match(/AppleWebKit.*Mobile.*/),ios:!!e.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),android:e.indexOf("Android")>-1||e.indexOf("Linux")>-1,iPhone:e.indexOf("iPhone")>-1,iPad:e.indexOf("iPad")>-1,platform:navigator.platform}}(),lang:(navigator.browserLanguage||navigator.language).toLowerCase()}).info.platform.toLowerCase().indexOf("win")&&0>r.info.platform.toLowerCase().indexOf("mac")?r.info.android?"android":r.info.ios||r.info.iPhone||r.info.iPad?"ios":"":"pc",t.isArray=function(e){return"[object Array]"===Object.prototype.toString.call(e)},t.isFunction=function(e){return"[object Function]"===Object.prototype.toString.call(e)},t.isEmptyObject=function(e){return"{}"===JSON.stringify(e)},t.alert=function(e){try{"string"==typeof e?alert(e):"object"==typeof e?alert(t.jsonToStr(e)):alert(e)}catch(r){alert(e)}},t.UUID=function(e){e=isNaN(e=parseInt(e=e||6,10))?6:e;for(var r="0123456789abcdefghijklmnopqrstubwxyzABCEDFGHIJKLMNOPQRSTUVWXYZ",t="";e--;)t+=r[Math.round(61*Math.random())];return t},t.isJSONObject=function(e){return"[object Object]"===Object.prototype.toString.call(e)},t.isJSONArray=function(e){return"[object Array]"===Object.prototype.toString.call(e)},t.isFunction=function(e){return"[object Function]"===Object.prototype.toString.call(e)},t.isEmpty=function(e){return!!(null==e||e.toString&&""+e=="")},t.check=function(e,r,t){for(var n=0,i=r.length;i>n;n++)if(null==e[r[n]]){var o="参数["+r[n]+"]不能为空";return alert(t?t+o:o),!1}return!0},t.checkIfExist=function(e,r,t){for(var n=0,i=r.length;i>n;n++){var o=r[n];if(o in e&&$summer.isEmpty(e[o])){var a="参数["+r[n]+"]不能为空";return alert(t?t+a:a),!1}}return!0},t.isNamespace=function(e){if(null==e)return!1;if("string"==typeof e&&""===e)return!1;if(0>e.indexOf(".")||"."==e.substring(0,1)||"."==e.substring(e.length-1))return alert("包名非法，不包含.或以.开始结束"),!1;for(var r=e.split("."),t=0,n=r.length;n>t;t++){var i=r[t];if(""===i)return alert("非法的包名中连续含有两个."),!1;if(!/^[a-z]+([a-zA-Z_][a-zA-Z_0-9]*)*$/.test(i))return alert("非法的包名"),!1}return!0},window.$isJSONObject=t.isJSONObject,window.$isJSONArray=t.isJSONArray,window.$isFunction=t.isFunction,window.$isEmpty=t.isEmpty,window.$summer=window.$summer||t;var n=window.$summer||{};n.isElement=function(e){return!(!e||1!=e.nodeType)},n.addEvt=function(e,r,t,i){n.isElement(e)?(i=i||!1,e.addEventListener&&e.addEventListener(r,t,i)):console.warn("$summer.addEvt Function need el param, el param must be DOM Element")},n.rmEvt=function(e,r,t,i){n.isElement(e)?(i=i||!1,e.removeEventListener&&e.removeEventListener(r,t,i)):console.warn("$summer.rmEvt Function need el param, el param must be DOM Element")},n.one=function(e,r,t,i){if(n.isElement(e)){var o=this;o.addEvt(e,r,function n(){t&&t(),o.rmEvt(e,r,n,i)},i=i||!1)}else console.warn("$api.one Function need el param, el param must be DOM Element")},n.dom=function(e,r){if(1===arguments.length&&"string"==typeof arguments[0]){if(document.querySelector)return document.querySelector(arguments[0])}else if(2===arguments.length&&e.querySelector)return e.querySelector(r)},n.domAll=function(e,r){if(1===arguments.length&&"string"==typeof arguments[0]){if(document.querySelectorAll)return document.querySelectorAll(arguments[0])}else if(2===arguments.length&&e.querySelectorAll)return e.querySelectorAll(r)},n.byId=function(e){return document.getElementById(e)},n.first=function(e,r){return 1===arguments.length?n.isElement(e)?e.children[0]:void console.warn("$summer.first Function need el param, el param must be DOM Element"):2===arguments.length?this.dom(e,r+":first-child"):void 0},n.last=function(e,r){if(1===arguments.length){if(!n.isElement(e))return void console.warn("$summer.last Function need el param, el param must be DOM Element");var t=e.children;return t[t.length-1]}if(2===arguments.length)return this.dom(e,r+":last-child")},n.eq=function(e,r){return this.dom(e,":nth-child("+r+")")},n.not=function(e,r){return this.domAll(e,":not("+r+")")},n.prev=function(e){if(n.isElement(e)){var r=e.previousSibling;return r.nodeType&&3===r.nodeType?r=r.previousSibling:void 0}console.warn("$api.prev Function need el param, el param must be DOM Element")},n.next=function(e){if(n.isElement(e)){var r=e.nextSibling;return r.nodeType&&3===r.nodeType?r=r.nextSibling:void 0}console.warn("$api.next Function need el param, el param must be DOM Element")},n.closest=function(e,r){if(n.isElement(e)){var t,i;return function e(r,o){for(t=n.domAll(r.parentNode,o),i=function(e,r){for(var t=0,n=e.length;n>t;t++)if(e[t].isEqualNode(r))return e[t];return!1}(t,r);!i;){if(null!==(r=r.parentNode)&&r.nodeType==r.DOCUMENT_NODE)return!1;e(r,o)}return i}(e,r)}console.warn("$api.closest Function need el param, el param must be DOM Element")},n.contains=function(e,r){var t=!1;if(r===e)return t=!0;do{if((r=r.parentNode)===e)return t=!0}while(r===document.body||r===document.documentElement);return t},n.remove=function(e){e&&e.parentNode&&e.parentNode.removeChild(e)},n.attr=function(e,r,t){if(n.isElement(e))return 2==arguments.length?e.getAttribute(r):3==arguments.length?(e.setAttribute(r,t),e):void 0;console.warn("$api.attr Function need el param, el param must be DOM Element")},n.removeAttr=function(e,r){n.isElement(e)?2===arguments.length&&e.removeAttribute(r):console.warn("$api.removeAttr Function need el param, el param must be DOM Element")},n.hasCls=function(e,r){if(n.isElement(e))return e.className.indexOf(r)>-1;console.warn("$api.hasCls Function need el param, el param must be DOM Element")},n.addCls=function(e,r){if(n.isElement(e)){if("classList"in e)e.classList.add(r);else e.className=e.className+" "+r;return e}console.warn("$api.addCls Function need el param, el param must be DOM Element")},n.removeCls=function(e,r){if(n.isElement(e)){if("classList"in e)e.classList.remove(r);else{var t=e.className.replace(r,"");e.className=t}return e}console.warn("$api.removeCls Function need el param, el param must be DOM Element")},n.toggleCls=function(e,r){if(n.isElement(e))return"classList"in e?e.classList.toggle(r):n.hasCls(e,r)?n.addCls(e,r):n.removeCls(e,r),e;console.warn("$api.toggleCls Function need el param, el param must be DOM Element")},n.val=function(e,r){if(n.isElement(e)){if(1===arguments.length)switch(e.tagName){case"SELECT":return e.options[e.selectedIndex].value;case"INPUT":case"TEXTAREA":return e.value}if(2===arguments.length)switch(e.tagName){case"SELECT":return e.options[e.selectedIndex].value=r,e;case"INPUT":case"TEXTAREA":return e.value=r,e}}else console.warn("$api.val Function need el param, el param must be DOM Element")},n.prepend=function(e,r){if(n.isElement(e))return e.insertAdjacentHTML("afterbegin",r),e;console.warn("$api.prepend Function need el param, el param must be DOM Element")},n.append=function(e,r){if(n.isElement(e))return e.insertAdjacentHTML("beforeend",r),e;console.warn("$api.append Function need el param, el param must be DOM Element")},n.before=function(e,r){if(n.isElement(e))return e.insertAdjacentHTML("beforebegin",r),e;console.warn("$api.before Function need el param, el param must be DOM Element")},n.after=function(e,r){if(n.isElement(e))return e.insertAdjacentHTML("afterend",r),e;console.warn("$api.after Function need el param, el param must be DOM Element")},n.html=function(e,r){if(n.isElement(e))return 1===arguments.length?e.innerHTML:2===arguments.length?(e.innerHTML=r,e):void 0;console.warn("$api.html Function need el param, el param must be DOM Element")},n.text=function(e,r){if(n.isElement(e))return 1===arguments.length?e.textContent:2===arguments.length?(e.textContent=r,e):void 0;console.warn("$api.text Function need el param, el param must be DOM Element")},n.offset=function(e){if(n.isElement(e)){var r,t;document.documentElement?(r=document.documentElement.scrollLeft,t=document.documentElement.scrollTop):(r=document.body.scrollLeft,t=document.body.scrollTop);var i=e.getBoundingClientRect();return{l:i.left+r,t:i.top+t,w:e.offsetWidth,h:e.offsetHeight}}console.warn("$api.offset Function need el param, el param must be DOM Element")},n.css=function(e,r){n.isElement(e)?"string"==typeof r&&r.indexOf(":")>0&&e.style&&(e.style.cssText+=";"+r):console.warn("$api.css Function need el param, el param must be DOM Element")},n.cssVal=function(e,r){if(n.isElement(e)){if(2===arguments.length)return window.getComputedStyle(e,null).getPropertyValue(r)}else console.warn("$api.cssVal Function need el param, el param must be DOM Element")},n.jsonToStr=function(e){if("object"==typeof e)return JSON&&JSON.stringify(e);alert("$summer.jsonToStr's parameter is not a json, it's typeof is "+typeof e)},n.strToJson=function(e){if("string"==typeof e)return JSON&&JSON.parse(e);alert("$summer.strToJson's parameter is not a string, it's typeof is "+typeof e)},n.winWidth=function(){return document.documentElement.offsetWidth||document.body.offsetWidth},n.winHeight=function(){return document.documentElement.offsetHeight||document.body.offsetHeight},n.fixStatusBar=function(e){if(n.isElement(e)){var r=summer.getSysInfo(),t=r.systemType,i=r.fullScreen,o=r.statusBarAppearance,a=r.statusBarHeight;"ios"==t&&i&&"1"==o||"pc"==t?(e.style.paddingTop="20px",$(e).children().css("top","20px")):"android"==t&&i&&o&&(e.style.paddingTop=a+"px",$(e).children().css("top",a+"px"))}else alert("$summer.fixStatusBar Function need el param, el param must be DOM Element")},window.$summer=window.$summer||n,window.$api=window.$summer;var i=function(){this._events={}};i.prototype.on=function(e,r){null==this._events[e]&&(this._events[e]=[]),this._events[e].push(r)},i.prototype.off=function(e,r){var t=this._events[e];if(void 0===r);else{for(var n=-1,i=0,o=t.length;o>i;i++)if(r==t[i]){n=i;break}n>0&&t.remove(n)}},i.prototype.trigger=function(e,r,t){try{var n=this._events[e];if(!n)return;t=t||{};for(var i=0,o=n.length;o>i;i++)(0,n[i])(r,t)}catch(e){alert(e)}};var o=new i,a={};a.$summer=a.$summer||{},a.summer=a.summer||{},a.api=a.summer,function(){try{var e=function(){document.addEventListener("DOMContentLoaded",function(){summer.trigger("init"),summer.pageParam=window.localStorage,"function"==typeof summerready&&summerready(),"function"==typeof summerReady&&summerReady(),summer.trigger("ready"),summer.trigger("aftershowwin")},!1)};if("pc"!=$summer.os&&window.summerBridge){var r="";if(0===document.location.href.indexOf("http")){var t=window.document.location.href,n=window.document.location.pathname,i=t.indexOf(n),o=t.substring(0,i),s=n.substring(0,n.substr(1).indexOf("/")+1);a.__$_CORDOVA_PATH=a.__$_CORDOVA_PATH||o+s,"android"==$summer.os?r=a.__$_CORDOVA_PATH+"/cordova/android/cordova.js":"ios"==$summer.os&&(r=a.__$_CORDOVA_PATH+"/cordova/ios/cordova.js")}else r=a.__$_CORDOVA_PATH?a.__$_CORDOVA_PATH+"www/cordova.js":document.location.pathname.split("www")[0]+"www/cordova.js";var c=document.createElement("script");c.id="cordova_js",c.type="text/javascript",c.charset="utf-8",c.async=!0,c.src=r,c.onload=function(e){a.$summer.cordova=a.cordova,a.summer.cordova=a.cordova,document.addEventListener("deviceready",function(){summer.trigger("init"),summer.winParam(function(e){"string"==typeof e&&(e=$summer.strToJson(e)),summer.pageParam=e,!1!==summer.autoShowWin&&summer.showWin({}),summer.getOpenWinTime({},function(e){var r=["FeLoad",{windowid:summer.getSysInfo().winId,startTime:e,endTime:(new Date).getTime(),app_version:summer.getVersion().versionName}];console.log(r),cordova.require("summer-plugin-apm.SummerAPM").insertAction(r,function(e){},function(e){})},function(e){}),"function"==typeof summerready?summerready():"function"==typeof summerReady&&summerReady(),summer.trigger("ready"),summer.trigger("aftershowwin")})},!1)},c.onerror=function(r){summer.__debug=!0,console.log("run by http:// protocol in debug Mode"),e()};var l=document.getElementsByTagName("script")[0];l.parentNode.insertBefore(c,l)}else summer.__debug=!0,console.log("run by file:// protocol in debug Mode"),e()}catch(e){console.log(e)}}(),a.summer.require=function(e){return window.$summer.cordova!=window.cordova&&(alert("---------warnning : init cordova is too late!"),window.$summer.cordova=window.cordova,window.summer.cordova=window.cordova),"cordova"==e?window.summer.cordova:window.summer.cordova.require(e)},a.summer.canrequire=function(){return navigator.platform.toLowerCase().indexOf("win")<=-1},a.$summer.require=a.summer.require,a.summer.on=function(e,r){o.on(e,r)},a.summer.trigger=function(e){o.trigger(e)},w.adrinvoker&&alert(w.adrinvoker);var c={};if(w.adrinvoker&&w.adrinvoker.call2&&alert(w.adrinvoker.call2),c.call=function(e,r){try{if(navigator.platform.toLowerCase().indexOf("win")>=0)return void alert("执行"+e+"完毕\n参数是："+r);r=r||"{}";try{return summer.require("summer-plugin-service.XService").call(e,$summer.strToJson(r))}catch(e){return void($summer.__debug&&alert("Excp6.1: 异步调用summer-plugin-service.XService异常:"+e))}}catch(e){alert("Excp6: 异步调用adrinvoker.call异常:"+e)}},c.call2=function(e,r){try{if(navigator.platform.toLowerCase().indexOf("win")>=0)return void alert("执行"+e+"完毕\n参数是："+r);if("undefined"!=typeof summerBridge)try{return summerBridge.callSync(e,r)}catch(e){alert("Excp7.1: summerBridge.callSync异常:"+e)}else alert("summerBridge is not defined by native successfully!")}catch(e){alert("Excp7: 同步调用adrinvoker.call2异常:"+e)}},w.adrinvoker=c,"undefined"!=typeof CurrentEnvironment&&("ios"==$summer.os?CurrentEnvironment.DeviceType=CurrentEnvironment.DeviceIOS:"android"==$summer.os&&(CurrentEnvironment.DeviceType=CurrentEnvironment.DeviceAndroid)),void 0===l)var l=function(e,r){return c.call2(e,r)};else alert("UM_callNativeService is exist! fatal error!"),alert(l);if(w.UM_callNativeService=l,void 0===u)var u=function(e,r){return c.call(e,r)};else alert("UM_callNativeServiceNoraml is exist! fatal error!"),alert(u);w.UM_callNativeServiceNoraml=u,s.callSync=function(e,r){var t=r;"object"==typeof r?t=JSON.stringify(r):"string"!=typeof r&&(t=""+r);try{return summerBridge.callSync(e,t)}catch(e){if("pc"==$summer.os)return r;alert(e)}},s.callCordova=function(e,r,t,n,i){if(this.canrequire()&&!this.__debug){var o=this.cordova.require(e);o&&o[r]?o[r](t,n,i):alert("the cordova plug["+e+"]'s method["+r+"] not implementation")}else console.log("the cordova plug["+e+"]'s method["+r+"] executed!")},s||(s={},w.summer=s),s.window={openFrame:function(e,r,t){return e.animation=e.animation||{},e.pageParam=e.pageParam||{},e.rect&&!e.position&&(e.position={},e.position.left=e.rect.x,e.position.top=e.rect.y,e.position.width=e.rect.w,e.position.height=e.rect.h),e.name&&!e.id&&(e.id=e.name),e.alert&&($summer.alert(e),delete e.alert),s.callCordova("summer-plugin-frame.XFrame","openFrame",e,r,t)},closeFrame:function(e,r,t){return s.callCordova("summer-plugin-frame.XFrame","closeFrame",e,r,t)},openFrameGroup:function(e,r,t){return s.callCordova("summer-plugin-frame.XFrame","openFrameGroup",e,r,t)},closeFrameGroup:function(e,r,t){return s.callCordova("summer-plugin-frame.XFrame","closeFrameGroup",e,r,t)},setFrameGroupAttr:function(e,r,t){return s.callCordova("summer-plugin-frame.XFrame","setFrameGroupAttr",e,r,t)},setFrameGroupIndex:function(e,r,t){return s.callCordova("summer-plugin-frame.XFrame","setFrameGroupIndex",e,r,t)},openWin:function(e,r,t){return e.animation||(e.animation={type:"push",subType:"from_right",duration:300}),s.callCordova("summer-plugin-frame.XFrame","openWin",e,r,t)},initializeWin:function(e,r,t){return s.callCordova("summer-plugin-frame.XFrame","initializeWin",e,r,t)},addEventListener:function(e,r,t){if("ios"==$summer.os)return s.callCordova("summer-plugin-frame.XFrame","addEventListener",e,r,t);if("android"==$summer.os&&e.event&&e.handler)e.handler.replace(/\(|\)/g,"")},createWin:function(e,r,t){return s.callCordova("summer-plugin-frame.XFrame","createWin",e,r,t)},getOpenWinTime:function(e,r,t){return s.callCordova("summer-plugin-frame.XFrame","getOpenWinTime",e,r,t)},showWin:function(e,r,t){return s.callCordova("summer-plugin-frame.XFrame","showWin",e,r,t)},setWinAttr:function(e,r,t){return s.callCordova("summer-plugin-frame.XFrame","setWinAttr",e,r,t)},closeWin:function(e,r,t){return"string"==typeof e?e={id:e}:void 0===e&&(e={}),s.callCordova("summer-plugin-frame.XFrame","closeWin",e,r,t)},closeToWin:function(e,r,t){return"string"==typeof e?e={id:e}:void 0===e&&(e={}),s.callCordova("summer-plugin-frame.XFrame","closeToWin",e,r,t)},getSysInfo:function(e,r,t){return"string"==typeof e&&(e=alert("parameter json is required json object type, but is string type")),JSON.parse(s.callSync("SummerDevice.getSysInfo",e||{systemType:"android",systemVersion:7,statusBarAppearance:!0,fullScreen:!0,pageParam:{param0:123,param1:"abc"},screenWidth:"",screenHeight:"",winId:"",winWidth:"",winHeight:"",frameId:"",frameWidth:"",frameHeight:"",statusBarHeight:"",statusBarStyle:"",appParam:""}))},setFrameAttr:function(e,r,t){if(s.canrequire())return s.cordova.require("summer-plugin-frame.XFrame").setFrameAttr(e,r,t)},winParam:function(e,r,t){if(s.canrequire())return s.cordova.require("summer-plugin-frame.XFrame").winParam(e,r,t)},frameParam:function(e,r,t){if(s.canrequire())return s.cordova.require("summer-plugin-frame.XFrame").frameParam(e,r,t)},setRefreshHeaderInfo:function(e,r,t){if(s.canrequire())return s.cordova.require("summer-plugin-frame.XFrame").setRefreshHeaderInfo(e,r,t)},refreshHeaderLoadDone:function(e,r,t){if(s.canrequire())return s.cordova.require("summer-plugin-frame.XFrame").refreshHeaderLoadDone(e,r,t)},refreshHeaderBegin:function(e,r,t){if(s.canrequire())return s.cordova.require("summer-plugin-frame.XFrame").refreshHeaderBegin(e,r,t)},setRefreshFooterInfo:function(e,r,t){if(s.canrequire())return s.cordova.require("summer-plugin-frame.XFrame").setRefreshFooterInfo(e,r,t)},refreshFooterLoadDone:function(e,r,t){if(s.canrequire())return s.cordova.require("summer-plugin-frame.XFrame").refreshFooterLoadDone(e,r,t)},refreshFooterBegin:function(e,r,t){if(s.canrequire())return s.cordova.require("summer-plugin-frame.XFrame").refreshFooterBegin(e,r,t)},hideLaunch:function(e,r,t){return s.callCordova("summer-plugin-frame.XFrame","removeStartPage",e,r,t)},setTabbarIndex:function(e,r,t){return s.callCordova("summer-plugin-frame.XFrame","setTabbarItemSelect",e,r,t)}},s.openFrame=s.window.openFrame,s.closeFrame=s.window.closeFrame,s.openWin=s.window.openWin,s.initializeWin=s.window.initializeWin,s.addEventListener=s.window.addEventListener,s.setWinAttr=s.window.setWinAttr,s.createWin=s.window.createWin,s.getOpenWinTime=s.window.getOpenWinTime,s.showWin=s.window.showWin,s.closeWin=s.window.closeWin,s.closeToWin=s.window.closeToWin,s.getSysInfo=s.window.getSysInfo,s.winParam=s.window.winParam,s.frameParam=s.window.frameParam,s.setFrameAttr=s.window.setFrameAttr,s.setRefreshHeaderInfo=s.window.setRefreshHeaderInfo,s.refreshHeaderLoadDone=s.window.refreshHeaderLoadDone,s.refreshHeaderBegin=s.window.refreshHeaderBegin,s.setRefreshFooterInfo=s.window.setRefreshFooterInfo,s.refreshFooterLoadDone=s.window.refreshFooterLoadDone,s.refreshFooterBegin=s.window.refreshFooterBegin,s.openFrameGroup=s.window.openFrameGroup,s.closeFrameGroup=s.window.closeFrameGroup,s.setFrameGroupAttr=s.window.setFrameGroupAttr,s.setFrameGroupIndex=s.window.setFrameGroupIndex,s.hideLaunch=s.window.hideLaunch,s.setTabbarIndex=s.window.setTabbarIndex,s.showProgress=function(e){s.canrequire()&&summer.require("summer-plugin-service.XService").call("UMJS.showLoadingBar",e=e||{})},s.hideProgress=function(e){s.canrequire()&&summer.require("summer-plugin-service.XService").call("UMJS.hideLoadingBar",e=e||{})},s.toast=function(e){s.canrequire()&&summer.require("summer-plugin-service.XService").call("UMJS.toast",e=e||{})},s.upload=function(e,r,t,n){var i=e.fileURL,o=e.type,a=e.params,s=new FileUploadOptions;s.fileKey="file",s.fileName=i.substr(i.lastIndexOf("/")+1),s.mimeType=o,s.params=a,s.httpMethod="POST",s.headers=n||{},(new FileTransfer).upload(i,encodeURI(e.SERVER),r,t,s)},s.multiUpload=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMFile.multiUpload",e,!1)},s.eval=function(e){setTimeout("try{eval("+e+")}catch(e){alert(e)}",10)},s.execScript=function(e){if("object"==typeof e&&(e.script?e.script="try{"+e.script+"}catch(e){alert(e)}":alert("the parameter script of the execScript function is "+e.script)),s.canrequire())return this.callCordova("summer-plugin-frame.XFrame","execScript",e,null,null)};var m=function(e){return"localStorage"==(e=e||"localStorage")?window.localStorage?window.localStorage:void alert("your device do not support the localStorage"):"sessionStorage"==e?window.sessionStorage?window.sessionStorage:void alert("your device do not support the sessionStorage"):"application"==e?{setItem:function(e,r){return s.callSync("SummerStorage.writeApplicationContext",JSON.stringify({key:e,value:r}))},getItem:function(e){return s.callSync("SummerStorage.readApplicationContext",JSON.stringify({key:e}))}}:"configure"==e?{setItem:function(e,r){var t={key:e,value:"string"==typeof r?r:JSON.stringify(r)};return s.callSync("SummerStorage.writeConfigure",JSON.stringify(t))},getItem:function(e){return s.callSync("SummerStorage.readConfigure",JSON.stringify({key:e}))}}:"window"==e?{setItem:function(e,r){var t={key:e,value:"string"==typeof r?r:JSON.stringify(r)};return s.callSync("SummerStorage.writeWindowContext",JSON.stringify(t))},getItem:function(e){return s.callSync("SummerStorage.readWindowContext",JSON.stringify({key:e}))}}:void 0};s.setStorage=function(e,r,t){var n=r;"configure"!=t&&(n="object"==typeof n?"obj-"+(n=JSON.stringify(n)):"str-"+n);var i=m(t);i&&i.setItem(e,n)},s.getStorage=function(e,r){var t=m(r);if(t){var n=t.getItem(e);if(!n)return;return"configure"!=r?0===n.indexOf("obj-")?(n=n.slice(4),JSON.parse(n)):0===n.indexOf("str-")?n.slice(4):n:n}},s.setAppStorage=function(e,r){return s.setStorage(e,r,"application")},s.getAppStorage=function(e){return s.getStorage(e,"application")},s.setWindowStorage=function(e,r){return s.setStorage(e,r,"window")},s.getWindowStorage=function(e){return s.getStorage(e,"window")},s.rmStorage=function(e){var r=m();r&&e&&r.removeItem(e)},s.clearStorage=function(){var e=m();e&&e.clear()},s.sysInfo=function(e,r,t){if(s.canrequire())return s.cordova.require("summer-plugin-frame.XService").sysInfo(e,r,t)},s.getAppVersion=function(e){return s.callSync("XUpgrade.getAppVersion",e||{})},s.upgradeApp=function(e,r,t){return s.callCordova("summer-plugin-core.XUpgrade","upgradeApp",e,r,t)},s.getVersion=function(e){var r=s.callSync("XUpgrade.getVersion",e||{});return"string"==typeof r?JSON.parse(r):(alert("getVersion' return value is not string!"),r)},s.upgrade=function(e,r,t){return s.callCordova("summer-plugin-core.XUpgrade","upgrade",e,r,t)},s.exitApp=function(e,r,t){return s.callCordova("summer-plugin-core.XUpgrade","exitApp",e||{},r,t)},s.collectInfos=function(e){var r=["login",e];cordova.require("summer-plugin-apm.SummerAPM").insertAction(r,function(e){},function(e){})},s.getPermission=function(e,r,t){if("android"==$summer.os)return s.callCordova("summer-plugin-service.XService","getPermission",e,r,t)},s.umRef=function(){};var f={refs:{},exec:function(e,r){this.refs[e].callback(r),delete this.refs[e]}};s.openRef=function(e,r){var t=new s.umRef,n=s.getSysInfo();t.param={ref_id:"Fn"+$s.UUID(),ref_winId:n.winId,ref_frameId:n.frameId,ref_callBack:prefix+".refCallBack"},t.callback=r,f.refs[t.param.ref_id]=t,e.pageParam=e.pageParam||{},e.pageParam.refParam=t.param,s.openWin(e)},s.refCallBack=function(e,r){f.exec(e,r)},s.comleteRef=function(e){var r=e;"object"==typeof e?r=JSON.stringify(e):"string"==typeof e&&(r="'"+e+"'");var t={};t.um_refId=s.pageParam.refParam.ref_id,t.um_winId=s.pageParam.refParam.ref_winId,t.um_frameId=s.pageParam.refParam.ref_frameId,t.um_callBack=s.pageParam.refParam.ref_callBack,s.execScript({winId:t.um_winId,frameId:t.um_frameId,script:t.um_callBack+"('"+t.um_refId+"',"+r+");"}),s.closeWin()},w.$__cbm={},s||(s={},w.summer=s),s.UMService={call:function(e,r,t){try{var n="";if("string"==typeof(r=r||{}))try{var i=$summer.strToJson(r);if("object"!=typeof i)return void alert("调用服务["+e+"]时参数不是一个有效的json字符串。参数是"+r);r=i}catch(t){return alert("调用服务["+e+"]时参数不是一个有效的json字符串。参数是"+r),void alert(t)}if("object"!=typeof r)return void alert("调用$service.call("+e+", jsonArgs, "+t+")时不合法,参数jsonArgs类型为"+typeof r);s.UMService._callbackProxy(r,"callback"),s.UMService._callbackProxy(r,"error");try{if("object"==typeof(n=$summer.jsonToStr(r)))return void alert("调用服务["+e+"]时传递的参数不能标准化为json字符串，请检查参数格式"+r)}catch(e){alert("Excp4: 校验jsonArgs是否可jsonToStr时异常:"+e)}if(t)try{return adrinvoker.call2(e,n)}catch(e){alert("Excp5.1: 同步调用adrinvoker.call2异常:"+e)}else try{return adrinvoker.call(e,n)}catch(e){alert("Excp5.2: 异步调用adrinvoker.call异常:"+e)}}catch(r){var o="";console.log(o=t?'Excp601:调用$service.call("'+e+'", jsonArgs, '+t+")时发生异常,请检查!":'Excp602:调用$service.call("'+e+'", jsonArgs)时发生异常,请检查!'),alert(o+", 更多请使用chrome inspect调试查看console日志;\n错误堆栈信息e为:\n"+r)}},_callbackProxy:function(e,r){try{if(!e[r])return!0;if("string"==typeof e[r]){var t="";try{t=e[r].substring(0,e[r].indexOf("("));var n=window[t];if("function"!=typeof n)return alert("Excpt2.91:"+t+" is not a function, and must be a global function!\nit's typeof is "+typeof n),!1;e[r]=n}catch(e){return alert("Excpt2.96: callback define error!\n"+t+" is not a valid global function"),!1}}if("function"==typeof e[r]){for(var i="__UMCB_"+$summer.UUID(8);$__cbm[i];)i="__UMCB_"+$summer.UUID(8);return $__cbm[i]=e[r],window[i]=function(e,r){try{null==r&&(r=e),$__cbm[i](e,r)}catch(e){alert(e)}finally{return}},e[r]=i+"()",!0}return!1}catch(e){return alert("Excp603: Exception in handling callback proxy:\n"+e),!1}},openHTTPS:function(e){if($summer.isJSONObject(e))return e.ishttps?s.callService("UMService.openHTTPS",e,!1):void alert("请输入true或者false");alert("参数不是有效的JSONObject")},writeConfig:function(e,r){var t={};if(1==arguments.length&&"object"==typeof arguments[0])t=e;else{if(2!=arguments.length)return void alert("writeConfig时,参数不合法");t[e]=r}return s.callService("UMService.writeConfigure",t,!1)},readConfig:function(e){var r={};if("string"==typeof e)return r[e]=e,s.callService("UMService.readConfigure",r,!1);alert("readConfig时，不支持参数[name]的参数类型为"+typeof e)},setAppContext:function(e){var r={};if(1==arguments.length&&"object"==typeof arguments[0]){for(var t in e)"version"==t?(r.versionname=e[t],r.appversion=e[t]):"userid"==t?(r.userid=e[t],r.user=e[t]):"password"==t||"pass"==t?(r.password=e[t],r.pass=e[t]):r[t]=e[t];return s.callService("UMCtx.setAppValue",r,!1)}alert("setAppContext时,参数不合法")},callAction:function(e,r,t,n,i,o,a){if(1==arguments.length&&"object"==typeof arguments[0]){var c={};return c=e,s.callService("UMService.callAction",c,!1)}if((c={}).viewid=e,c.action=r,c.params=t,c.isDataCollect=n,c.callback=i,c.contextmapping=o,a)for(var l in a)c[l]=a[l];return s.callService("UMService.callAction",c)},get:function(e){if($summer.isJSONObject(e))return e.url?s.callService("UMService.get",e,!1):void alert("请输入请求的url");alert("参数不是有效的JSONObject")},post:function(e){if($summer.isJSONObject(e))return e.url?s.callService("UMService.post",e,!1):void alert("请输入请求的url");alert("参数不是有效的JSONObject")}},s.callServiceEx=function(e,r,t){return e.params||(e.params={}),r&&(e.params.callback=r,s.UMService._callbackProxy(e.params,"callback")),t&&(e.params.error=t,s.UMService._callbackProxy(e.params,"error")),s.callCordova("summer-plugin-service.XService","callSync",e,null,null)},s.UMDevice={_deviceInfo_Screen:null,getTimeZoneID:function(){return s.callService("UMDevice.getTimeZoneID","",!0)},getTimeZoneDisplayName:function(){return s.callService("UMDevice.getTimeZoneDisplayName",{},!0)},openAddressBook:function(){return s.callService("UMDevice.openAddressBook",{})},getInternalMemoryInfo:function(){return s.callService("UMDevice.getInternalMemoryInfo",{},!0)},getExternalStorageInfo:function(){return s.callService("UMDevice.getExternalStorageInfo",{},!0)},getMemoryInfo:function(){return s.callService("UMDevice.getMemoryInfo",{},!0)},openWebView:function(e){return $summer.isJSONObject(e)||alert("调用gotoMapView服务时，参数不是一个有效的JSONObject"),s.callService("UMDevice.openWebView",e)},screenShot:function(e){return s.callService("UMDevice.screenshot",e,!0)},notify:function(e){s.callService("UMService.localNotification",e)},getDeviceInfo:function(e){var r="";return r=e?s.callService("UMDevice.getDeviceInfo",$summer.jsonToStr(e),!1):s.callService("UMDevice.getDeviceInfo","",!0),JSON.parse(r)},getScreenWidth:function(){if(!this._deviceInfo_Screen){var e=this.getDeviceInfo(),r=$summer.strToJson(e);this._deviceInfo_Screen=r.screen}if(this._deviceInfo_Screen)return this._deviceInfo_Screen.width;alert("未能获取到该设备的屏幕信息")},getScreenHeight:function(){if(!this._deviceInfo_Screen){var e=this.getDeviceInfo(),r=$summer.strToJson(e);this._deviceInfo_Screen=r.screen}if(this._deviceInfo_Screen)return this._deviceInfo_Screen.height;alert("未能获取到该设备的屏幕信息")},getScreenDensity:function(){if(!this._deviceInfo_Screen){var e=this.getDeviceInfo(),r=$summer.strToJson(e);this._deviceInfo_Screen=r.screen}if(this._deviceInfo_Screen)return this._deviceInfo_Screen.density;alert("未能获取到该设备的屏幕信息")},currentOrientation:function(){return s.callService("UMDevice.currentOrientation",{},!0)},capturePhoto:function(e){$summer.isJSONObject(e)||alert("调用capturePhoto服务时，参数不是一个有效的JSONObject"),s.callService("UMDevice.capturePhoto",e)},getAlbumPath:function(e){return s.callService("UMDevice.getAlbumPath",void 0===e?{}:e,!0)},getAppAlbumPath:function(e){if(e){if(!$summer.isJSONObject(e))return void alert("调用 getAppAlbumPath 服务时，参数不是一个有效的JSONObject")}else e={};return s.callService("UMDevice.getAppAlbumPath",e,!0)},getContacts:function(){return s.callService("UMDevice.getContactPerson",{},!0)},saveContact:function(e){return $summer.isJSONObject(e)||alert("调用saveContact服务时，参数不是一个有效的JSONObject"),s.callService("UMDevice.saveContact",e,!0)},popupKeyboard:function(){return s.callService("UMDevice.popupKeyboard",{},!0)},listenGravitySensor:function(e){return(e=e||{}).__keepCallback=!0,s.callService("UMDevice.listenGravitySensor",e,!1)},closeGravitySensor:function(e){return e=e||{},s.callService("UMDevice.closeGravitySensor",e,!1)},openApp:function(e){return $summer.isJSONObject(e)||alert("调用openApp服务时，参数不是一个有效的JSONObject"),s.callService("UMDevice.openApp",e)},getLocationInfo:function(){return s.callService("UMDevice.getLocationInfo",{},!0)},addCalendarEvent:function(e){return $summer.isJSONObject(e)||alert("调用addCalendarEvent服务时，参数不是一个有效的JSONObject"),s.callService("UMDevice.addCalendarEvent",e,!1)},systemShare:function(e){return $summer.isJSONObject(e)||alert("调用systemShare服务时，参数不是一个有效的JSONObject"),s.callService("UMDevice.systemShare",e,!1)}},s.UMFile={remove:function(e){return s.callService("UMFile.remove",e,!1)},compressImage:function(e){return s.callService("UMFile.compressImg",e,!1)},doodle:function(e){return s.callService("UMFile.startDraw",e,!1)},saveImageToAlbum:function(e){return s.callService("UMFile.saveImageToAlbum",e,!1)},exists:function(e){return s.callService("UMFile.exists",e,!0)},getStorageDirectory:function(e){if("android"==$summer.os)return s.callService("UMFile.getStorageDirectory",e,!0)},download:function(e){return $summer.isEmpty(e.url)&&alert("参数url不能为空"),$summer.isEmpty(e.filename)&&alert("参数filename不能为空"),$summer.isEmpty(e.locate)&&alert("参数locate不能为空"),$summer.isEmpty(e.override)&&alert("参数override不能为空"),$summer.isEmpty(e.callback)&&alert("参数callback不能为空 "),e.__keepCallback=!0,s.callService("UMFile.download",e)},open:function(e){return $summer.isJSONObject(e)||alert("调用$file.open方法时，参数不是一个有效的JSONObject"),s.callService("UMDevice.openFile",e,!1)},getFileInfo:function(e){var r=e;return"string"==typeof e&&(r={path:e}),s.callService("UMFile.getFileInfo",r,!0)},openFileSelector:function(e){return s.callService("UMFile.openFileSelector",e)},fileToBase64:function(e){var r=e;return"string"==typeof e&&(r={path:e}),s.callService("UMFile.fileToBase64",r,!1)},base64ToFile:function(e){var r=e;return"string"==typeof e&&(r={path:e}),s.callService("UMFile.base64ToFile",r,!1)},compressImg:function(e){return s.callService("UMFile.compressImg",e)}},s.UMTel={call:function(e){"android"==$summer.os||"ios"==$summer.os?s.callService("UMDevice.callPhone",'{"tel":"'+e+'"}'):alert("Not implementate UMP$Services$Telephone$call in $summer.os == "+$summer.os)},sendMsg:function(e,r){if(1==arguments.length&&$summer.isJSONObject(arguments[0])){if("android"==$summer.os||"ios"==$summer.os)return s.callService("UMDevice.sendMsg",e)}else"android"!=$summer.os&&"ios"!=$summer.os||s.callService("UMDevice.sendMsg","{tel:'"+e+"',body:'"+r+"'}")},sendMail:function(e,r,t){var n={};return 1==arguments.length&&$summer.isJSONObject(arguments[0])?n=e:(n.receive=e,n.title=r,n.content=t),s.callService("UMDevice.sendMail",n)}},s.UMCamera={open:function(e){if($summer.checkIfExist(e,["bindfield","callback","compressionRatio"]))return s.callService("UMDevice.openCamera",e,!1)},openPhotoAlbum:function(e){if(e)return s.callService("UMDevice.openPhotoAlbum",e,!1)}},s.UMScanner={open:function(e){e?(null!=e.frameclose&&null!=e.frameclose||(e.frameclose="true"),s.callService("UMDevice.captureTwodcode",e,!1)):s.callService("UMDevice.captureTwodcode","",!0)},generateQRCode:function(e){if($summer.isJSONObject(e)){if(void 0!==e.size&&(e["twocode-size"]=e.size),void 0!==e.content&&(e["twocode-content"]=e.content),void 0===e["twocode-size"]&&(e["twocode-size"]="180"),void 0!==e["twocode-content"])return s.callService("UMDevice.createTwocodeImage",e,!0);alert("参数twocode-content不能为空，此参数用来标识扫描二维码后的返回值")}else alert("generateQRCode方法的参数不是一个有效的JSONObject!")}},s.UMNet={available:function(){var e=!1;return"android"!=$summer.os&&"ios"!=$summer.os||(e=s.callService("UMNetwork.isAvailable",{},!0)),null!=e&&"true"==(""+e).toLowerCase()},getNetworkInfo:function(){var e=s.callService("UMNetwork.getNetworkInfo",{},!0);return"string"==typeof e?$summer.strToJson(e):e}},s.UMSqlite={openDB:function(e){if($summer.isJSONObject(e)&&!$summer.isEmpty(e.db))return s.callService("UMSQLite.openDB",e,!1);alert("参数不是一个有效的JSONObject，请使用openDB({...})形式的API")},execSql:function(e){if($summer.isJSONObject(e))return $summer.isEmpty(e.db)?void alert("请输入参数db"):$summer.isEmpty(e.sql)?void alert("请输入参数sql"):s.callService("UMSQLite.execSql",e,!0);alert("参数不是一个有效的JSONObject，请使用execSql({...})形式的API")},query:function(e){if($summer.isJSONObject(e))return s.callService("UMSQLite.query",e,!0);alert("参数不是一个有效的JSONObject，请使用query({...})形式的API")},queryByPage:function(e){if($summer.isJSONObject(e))return $summer.isEmpty(e.pageSize)&&(e.pageSize=10),$summer.isEmpty(e.pageIndex)&&(e.pageIndex=0),s.callService("UMSQLite.queryByPage",e,!0);alert("参数不是一个有效的JSONObject，请使用queryByPage({...})形式的API")},exist:function(e){if($summer.isJSONObject(e))return $summer.isEmpty(e.db)?void alert("请输入参数db"):s.callService("UMSQLite.exist",e,!0);alert("参数不是一个有效的JSONObject，请使用exist({...})形式的API")}},s.UMCache={writeFile:function(e,r){var t={};return e&&(t.path=e),r&&(t.content=r),s.callService("UMFile.write",t,!1)},readFile:function(e){var r,t={};if(e&&(t.path=e),!(r=s.callService("UMFile.read",t,!0))||""==r)return null;try{return r}catch(e){return r}}},s.openHTTPS=s.UMService.openHTTPS,s.callService=s.UMService.call,s.callAction=s.UMService.callAction,s.writeConfig=s.UMService.writeConfig,s.readConfig=s.UMService.readConfig,s.setAppContext=s.UMService.setAppContext,s.getTimeZoneID=s.UMDevice.getTimeZoneID,s.getTimeZoneDisplayName=s.UMDevice.getTimeZoneDisplayName,s.openAddressBook=s.UMDevice.openAddressBook,s.getInternalMemoryInfo=s.UMDevice.getInternalMemoryInfo,s.getExternalStorageInfo=s.UMDevice.getExternalStorageInfo,s.getMemoryInfo=s.UMDevice.getMemoryInfo,s.openWebView=s.UMDevice.openWebView,s.screenShot=s.UMDevice.screenShot,s.notify=s.UMDevice.notify,s.getDeviceInfo=s.UMDevice.getDeviceInfo,s.getScreenWidth=s.UMDevice.getScreenWidth,s.getScreenHeight=s.UMDevice.getScreenHeight,s.getScreenDensity=s.UMDevice.getScreenDensity,s.currentOrientation=s.UMDevice.currentOrientation,s.capturePhoto=s.UMDevice.capturePhoto,s.getAlbumPath=s.UMDevice.getAlbumPath,s.getAppAlbumPath=s.UMDevice.getAppAlbumPath,s.getContacts=s.UMDevice.getContacts,s.saveContact=s.UMDevice.saveContact,s.popupKeyboard=s.UMDevice.popupKeyboard,s.listenGravitySensor=s.UMDevice.listenGravitySensor,s.closeGravitySensor=s.UMDevice.closeGravitySensor,s.openApp=s.UMDevice.openApp,s.getLocationInfo=s.UMDevice.getLocationInfo,s.addCalendarEvent=s.UMDevice.addCalendarEvent,s.systemShare=s.UMDevice.systemShare,s.removeFile=s.UMFile.remove,s.compressImage=s.UMFile.compressImage,s.doodle=s.UMFile.doodle,s.saveImageToAlbum=s.UMFile.saveImageToAlbum,s.exists=s.UMFile.exists,s.getStorageDirectory=s.UMFile.getStorageDirectory,s.download=s.UMFile.download,s.openFile=s.UMFile.open,s.getFileInfo=s.UMFile.getFileInfo,s.openFileSelector=s.UMFile.openFileSelector,s.fileToBase64=s.UMFile.fileToBase64,s.base64ToFile=s.UMFile.base64ToFile,s.compressImg=s.UMFile.compressImg,s.callPhone=s.UMTel.call,s.sendMsg=s.UMTel.sendMsg,s.sendMail=s.UMTel.sendMail,s.writeFile=s.UMCache.writeFile,s.readFile=s.UMCache.readFile,s.openCamera=s.UMCamera.open,s.openPhotoAlbum=s.UMCamera.openPhotoAlbum,s.openScanner=s.UMScanner.open,s.generateQRCode=s.UMScanner.generateQRCode,s.netAvailable=s.UMNet.available,s.getNetworkInfo=s.UMNet.getNetworkInfo,s.ajax=function(e,r,t){if("get"==e.type.toLowerCase())return summer.get(e.url||"",e.param||{},e.header||{},r,t);if("post"==e.type.toLowerCase()){if("android"==$summer.os&&$&&e.header&&"application/json"==e.header["Content-Type"]){var n={type:"post"};return n.url=e.url,e.param&&(n.data=JSON.stringify(e.param)),e.header&&e.header["Content-Type"]&&(n.contentType=e.header["Content-Type"]),n.processData=!0,e.dataType&&(n.dataType=e.dataType),e.header&&(n.beforeSend=function(r){for(var t in e.header)"Content-Type"!=t&&r.setRequestHeader(t,e.header[t])}),n.success=function(e){r&&r({data:e})},n.error=function(e){t&&t({data:e})},$.ajax(n)}return summer.post(e.url||"",e.param||{},e.header||{},r,t)}},s.get=function(e,r,t,n,i){var o=(new Date).getTime();return cordovaHTTP.get(e||"",r||{},t||{},function(r){var t=["FeLoad",{type:"get",startTime:o,endTime:(new Date).getTime(),url:e}];cordova.require("summer-plugin-apm.SummerAPM").insertAction(t,function(e){},function(e){}),n(r)},i)},s.post=function(e,r,t,n,i){var o=(new Date).getTime();return cordovaHTTP.post(e||"",r||{},t||{},function(r){var t=["FeLoad",{type:"get",startTime:o,endTime:(new Date).getTime(),url:e}];cordova.require("summer-plugin-apm.SummerAPM").insertAction(t,function(e){},function(e){}),n(r)},i)},s.getLocation=function(e,r){return navigator.geolocation.getCurrentPosition(e,r)},s.getNativeLocation=function(e,r,t){if(e)return"android"==$summer.os?(e.callback=r,e.error=t,s.callService("SummerGPS.getLocation",e,!1)):(e.callback=r,e.error=t,s.callService("UMDevice.getLocation",e,!1))},e.writeConfig=function(e,r,t){s.callService("UMEMMService.writeConfig",e,!1)},e.autofind=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMEMMService.autofind",e,!1)},e.registerDevice=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMEMMService.registerDevice",e,!1)},e.openAdmin=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMMDMService.openAdmin",e,!1)},e.openMDM=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMMDMService.openMDM",e,!1)},e.closeMDM=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMMDMService.closeMDM",e,!1)},e.login=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMEMMService.login",e,!1)},e.logout=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMEMMService.logout",e,!1)},e.getUserInfo=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMEMMService.getUserInfo",e,!1)},e.modifyPassword=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMEMMService.modifyPassword",e,!1)},e.modifyAvatar=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMEMMService.modifyAvatar",e,!1)},e.getApps=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMEMMService.getApps",e,!1)},e.getDocs=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMEMMService.getDocs",e,!1)},e.startStrategy=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMEMMService.startStrategy",e,!1)},e.stopStrategy=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMEMMService.stopStrategy",e,!1)},e.feedback=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMEMMService.feedback",e,!1)},e.getUserCommonApps=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMEMMService.getUserCommonApps",e,!1)},e.getSystemApps=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMEMMService.getSystemApps",e,!1)},e.getRecommendedApps=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMEMMService.getRecommendedApps",e,!1)},e.updateUserApps=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMEMMService.updateUserApps",e,!1)},e.upgradeWebApp=function(e,r,t){return e.callback=r,e.error=t,e.__keepCallback=!0,s.callService("UMEMMService.upgradeWebApp",e,!1)},e.installWebApp=function(e,r,t){return e.callback=r,e.error=t,e.__keepCallback=!0,s.callService("UMEMMService.installWebApp",e,!1)},e.openWebApp=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMEMMService.openWebApp",e,!1)},e.removeWebApp=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMEMMService.removeWebApp",e,!1)},e.upgradeSummerApp=function(e,r,t){return e.callback=r,e.error=t,e.__keepCallback=!0,s.callService("UMEMMService.upgradeSummerApp",e,!1)},e.upgradeSilentSignal=function(e,r,t){e.callback=r,e.error=t,s.callService("UMEMMService.upgradeSilentSignal",e,!1)},e.getLocalApps=function(e,r,t){return e.callback=r,e.error=t,s.callService("UMEMMService.getLocalApps",e,!1)};var p={},d={$:p};window.$summer=p,window.summer=d,w.$summer.__debug=!1;var v;(function(e){var r=function(e){var r,t=Object.prototype,n=t.hasOwnProperty,i="function"==typeof Symbol?Symbol:{},o=i.iterator||"@@iterator",a=i.asyncIterator||"@@asyncIterator",s=i.toStringTag||"@@toStringTag";function c(e,r,t,n){var i=Object.create((r&&r.prototype instanceof v?r:v).prototype),o=new F(n||[]);return i._invoke=function(e,r,t){var n=u;return function(i,o){if(n===f)throw Error("Generator is already running");if(n===p){if("throw"===i)throw o;return I()}for(t.method=i,t.arg=o;;){var a=t.delegate;if(a){var s=U(a,t);if(s){if(s===d)continue;return s}}if("next"===t.method)t.sent=t._sent=t.arg;else if("throw"===t.method){if(n===u)throw n=p,t.arg;t.dispatchException(t.arg)}else"return"===t.method&&t.abrupt("return",t.arg);n=f;var c=l(e,r,t);if("normal"===c.type){if(n=t.done?p:m,c.arg===d)continue;return{value:c.arg,done:t.done}}"throw"===c.type&&(n=p,t.method="throw",t.arg=c.arg)}}}(e,t,o),i}function l(e,r,t){try{return{type:"normal",arg:e.call(r,t)}}catch(e){return{type:"throw",arg:e}}}e.wrap=c;var u="suspendedStart",m="suspendedYield",f="executing",p="completed",d={};function v(){}function g(){}function h(){}var S={};S[o]=function(){return this};var y=Object.getPrototypeOf,w=y&&y(y(D([])));w&&w!==t&&n.call(w,o)&&(S=w);var M=h.prototype=v.prototype=Object.create(S);function b(e){["next","throw","return"].forEach(function(r){e[r]=function(e){return this._invoke(r,e)}})}function O(e){var r;this._invoke=function(t,i){function o(){return new Promise(function(r,o){!function r(t,i,o,a){var s=l(e[t],e,i);if("throw"!==s.type){var c=s.arg,u=c.value;return u&&"object"==typeof u&&n.call(u,"__await")?Promise.resolve(u.__await).then(function(e){r("next",e,o,a)},function(e){r("throw",e,o,a)}):Promise.resolve(u).then(function(e){c.value=e,o(c)},function(e){return r("throw",e,o,a)})}a(s.arg)}(t,i,r,o)})}return r=r?r.then(o,o):o()}}function U(e,t){var n=e.iterator[t.method];if(n===r){if(t.delegate=null,"throw"===t.method){if(e.iterator.return&&(t.method="return",t.arg=r,U(e,t),"throw"===t.method))return d;t.method="throw",t.arg=new TypeError("The iterator does not provide a 'throw' method")}return d}var i=l(n,e.iterator,t.arg);if("throw"===i.type)return t.method="throw",t.arg=i.arg,t.delegate=null,d;var o=i.arg;return o?o.done?(t[e.resultName]=o.value,t.next=e.nextLoc,"return"!==t.method&&(t.method="next",t.arg=r),t.delegate=null,d):o:(t.method="throw",t.arg=new TypeError("iterator result is not an object"),t.delegate=null,d)}function E(e){var r={tryLoc:e[0]};1 in e&&(r.catchLoc=e[1]),2 in e&&(r.finallyLoc=e[2],r.afterLoc=e[3]),this.tryEntries.push(r)}function A(e){var r=e.completion||{};r.type="normal",delete r.arg,e.completion=r}function F(e){this.tryEntries=[{tryLoc:"root"}],e.forEach(E,this),this.reset(!0)}function D(e){if(e){var t=e[o];if(t)return t.call(e);if("function"==typeof e.next)return e;if(!isNaN(e.length)){var i=-1,a=function t(){for(;++i<e.length;)if(n.call(e,i))return t.value=e[i],t.done=!1,t;return t.value=r,t.done=!0,t};return a.next=a}}return{next:I}}function I(){return{value:r,done:!0}}return g.prototype=M.constructor=h,h.constructor=g,h[s]=g.displayName="GeneratorFunction",e.isGeneratorFunction=function(e){var r="function"==typeof e&&e.constructor;return!!r&&(r===g||"GeneratorFunction"===(r.displayName||r.name))},e.mark=function(e){return Object.setPrototypeOf?Object.setPrototypeOf(e,h):(e.__proto__=h,s in e||(e[s]="GeneratorFunction")),e.prototype=Object.create(M),e},e.awrap=function(e){return{__await:e}},b(O.prototype),O.prototype[a]=function(){return this},e.AsyncIterator=O,e.async=function(r,t,n,i){var o=new O(c(r,t,n,i));return e.isGeneratorFunction(t)?o:o.next().then(function(e){return e.done?e.value:o.next()})},b(M),M[s]="Generator",M[o]=function(){return this},M.toString=function(){return"[object Generator]"},e.keys=function(e){var r=[];for(var t in e)r.push(t);return r.reverse(),function t(){for(;r.length;){var n=r.pop();if(n in e)return t.value=n,t.done=!1,t}return t.done=!0,t}},e.values=D,F.prototype={constructor:F,reset:function(e){if(this.prev=0,this.next=0,this.sent=this._sent=r,this.done=!1,this.delegate=null,this.method="next",this.arg=r,this.tryEntries.forEach(A),!e)for(var t in this)"t"===t.charAt(0)&&n.call(this,t)&&!isNaN(+t.slice(1))&&(this[t]=r)},stop:function(){this.done=!0;var e=this.tryEntries[0].completion;if("throw"===e.type)throw e.arg;return this.rval},dispatchException:function(e){if(this.done)throw e;var t=this;function i(n,i){return s.type="throw",s.arg=e,t.next=n,i&&(t.method="next",t.arg=r),!!i}for(var o=this.tryEntries.length-1;o>=0;--o){var a=this.tryEntries[o],s=a.completion;if("root"===a.tryLoc)return i("end");if(this.prev>=a.tryLoc){var c=n.call(a,"catchLoc"),l=n.call(a,"finallyLoc");if(c&&l){if(a.catchLoc>this.prev)return i(a.catchLoc,!0);if(a.finallyLoc>this.prev)return i(a.finallyLoc)}else if(c){if(a.catchLoc>this.prev)return i(a.catchLoc,!0)}else{if(!l)throw Error("try statement without catch or finally");if(a.finallyLoc>this.prev)return i(a.finallyLoc)}}}},abrupt:function(e,r){for(var t=this.tryEntries.length-1;t>=0;--t){var i=this.tryEntries[t];if(this.prev>=i.tryLoc&&n.call(i,"finallyLoc")&&i.finallyLoc>this.prev){var o=i;break}}!o||"break"!==e&&"continue"!==e||o.tryLoc>r||r>o.finallyLoc||(o=null);var a=o?o.completion:{};return a.type=e,a.arg=r,o?(this.method="next",this.next=o.finallyLoc,d):this.complete(a)},complete:function(e,r){if("throw"===e.type)throw e.arg;return"break"===e.type||"continue"===e.type?this.next=e.arg:"return"===e.type?(this.rval=this.arg=e.arg,this.method="return",this.next="end"):"normal"===e.type&&r&&(this.next=r),d},finish:function(e){for(var r=this.tryEntries.length-1;r>=0;--r){var t=this.tryEntries[r];if(t.finallyLoc===e)return this.complete(t.completion,t.afterLoc),A(t),d}},catch:function(e){for(var r=this.tryEntries.length-1;r>=0;--r){var t=this.tryEntries[r];if(t.tryLoc===e){var n=t.completion;if("throw"===n.type){var i=n.arg;A(t)}return i}}throw Error("illegal catch attempt")},delegateYield:function(e,t,n){return this.delegate={iterator:D(e),resultName:t,nextLoc:n},"next"===this.method&&(this.arg=r),d}},e}(e.exports);try{regeneratorRuntime=r}catch(e){Function("r","regeneratorRuntime = r")(r)}})(v={exports:{}},v.exports);return new(function(){function e(){this.isReady=!1;var e=navigator.userAgent,r=navigator.platform;("MacIntel"==r||e.includes("miniProgram"))&&(r="wx"),this.platform=r;for(var t=document.getElementsByTagName("script"),n=null,i=0;t.length>i;i++){var o=t[i];if(o.src.includes("mtl.js")){n=o.src;break}}n&&(this.jsFileDir=this._removeLastComponentOfPath(n),this.loadJsapi())}var r=e.prototype;return r._removeLastComponentOfPath=function(e){var r=e.split("/");return r.pop(),r.join("/")},r.configPermission=function(e){var r=this;this.isReady?e({code:0,response:"已申请过权限",error:null}):this._configPermission().then(function(t){e({code:0,response:t,error:null}),r.isReady=!0}).catch(function(r){e({code:1,response:null,error:r})})},r.loadJsapi=function(){"wx"==this.platform||"iPhone"==this.platform||("Android"==this.platform||this.platform.includes("Linux"))&&function(){for(var e=0,r=[].concat(["startRecord","stopRecord","onVoiceRecordEnd","playVoice","pauseVoice","stopVoice","onVoicePlayEnd","uploadVoice","downloadVoice","chooseImage","previewImage","uploadImage","downloadImage","getLocalImgData","translateVoice","getNetworkType","openLocation","getLocation","scanQRCode"],["navigateBack","navigateTo","redirectTo","switchTab","reLaunch","postMessage","getEnv"]);r.length>e;e++)mtl[r[e]]=function(e){}.bind(mtl);mtl.getLocation=function(e){summer.getPermission(["android.permission.INTERNET","android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"],function(r){summer.getNativeLocation({single:"true"},function(r){e.success(r)},function(r){e.fail(r)})},function(r){e.fail(r)})},mtl._configPermission=function(e){return new Promise(function(e,r){e("Android 无需授权")})}.bind(mtl)}(),(window.mtl_ready||function(){})()},e}())});
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global = global || self, global.mtl = factory());
+}(this, function () { 'use strict';
+
+  /**
+   * 获取环境参数
+   */
+  // 获取当前平台 
+  var platform = function () {
+    var _navigator = navigator,
+        userAgent = _navigator.userAgent,
+        platform = _navigator.platform;
+
+    if (userAgent.includes('miniProgram')) {
+      platform = 'wx';
+    } else if (platform.includes('Linux')) {
+      platform = 'android';
+    } else if (platform == 'iPhone' || platform == 'iPad') {
+      platform = 'ios';
+    }
+
+    var supportedPlatforms = ['wx', 'android', 'ios'];
+    platform = platform && platform.toLowerCase();
+
+    if (!supportedPlatforms.includes(platform)) {
+      // TODO: warning('暂未支持的该平台')
+      platform = 'h5';
+    }
+
+    return platform;
+  }();
+
+  function createCommonjsModule(fn, module) {
+  	return module = { exports: {} }, fn(module, module.exports), module.exports;
+  }
+
+  var runtime_1 = createCommonjsModule(function (module) {
+  /**
+   * Copyright (c) 2014-present, Facebook, Inc.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   */
+
+  var runtime = (function (exports) {
+
+    var Op = Object.prototype;
+    var hasOwn = Op.hasOwnProperty;
+    var undefined$1; // More compressible than void 0.
+    var $Symbol = typeof Symbol === "function" ? Symbol : {};
+    var iteratorSymbol = $Symbol.iterator || "@@iterator";
+    var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
+    var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+
+    function wrap(innerFn, outerFn, self, tryLocsList) {
+      // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
+      var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
+      var generator = Object.create(protoGenerator.prototype);
+      var context = new Context(tryLocsList || []);
+
+      // The ._invoke method unifies the implementations of the .next,
+      // .throw, and .return methods.
+      generator._invoke = makeInvokeMethod(innerFn, self, context);
+
+      return generator;
+    }
+    exports.wrap = wrap;
+
+    // Try/catch helper to minimize deoptimizations. Returns a completion
+    // record like context.tryEntries[i].completion. This interface could
+    // have been (and was previously) designed to take a closure to be
+    // invoked without arguments, but in all the cases we care about we
+    // already have an existing method we want to call, so there's no need
+    // to create a new function object. We can even get away with assuming
+    // the method takes exactly one argument, since that happens to be true
+    // in every case, so we don't have to touch the arguments object. The
+    // only additional allocation required is the completion record, which
+    // has a stable shape and so hopefully should be cheap to allocate.
+    function tryCatch(fn, obj, arg) {
+      try {
+        return { type: "normal", arg: fn.call(obj, arg) };
+      } catch (err) {
+        return { type: "throw", arg: err };
+      }
+    }
+
+    var GenStateSuspendedStart = "suspendedStart";
+    var GenStateSuspendedYield = "suspendedYield";
+    var GenStateExecuting = "executing";
+    var GenStateCompleted = "completed";
+
+    // Returning this object from the innerFn has the same effect as
+    // breaking out of the dispatch switch statement.
+    var ContinueSentinel = {};
+
+    // Dummy constructor functions that we use as the .constructor and
+    // .constructor.prototype properties for functions that return Generator
+    // objects. For full spec compliance, you may wish to configure your
+    // minifier not to mangle the names of these two functions.
+    function Generator() {}
+    function GeneratorFunction() {}
+    function GeneratorFunctionPrototype() {}
+
+    // This is a polyfill for %IteratorPrototype% for environments that
+    // don't natively support it.
+    var IteratorPrototype = {};
+    IteratorPrototype[iteratorSymbol] = function () {
+      return this;
+    };
+
+    var getProto = Object.getPrototypeOf;
+    var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+    if (NativeIteratorPrototype &&
+        NativeIteratorPrototype !== Op &&
+        hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
+      // This environment has a native %IteratorPrototype%; use it instead
+      // of the polyfill.
+      IteratorPrototype = NativeIteratorPrototype;
+    }
+
+    var Gp = GeneratorFunctionPrototype.prototype =
+      Generator.prototype = Object.create(IteratorPrototype);
+    GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
+    GeneratorFunctionPrototype.constructor = GeneratorFunction;
+    GeneratorFunctionPrototype[toStringTagSymbol] =
+      GeneratorFunction.displayName = "GeneratorFunction";
+
+    // Helper for defining the .next, .throw, and .return methods of the
+    // Iterator interface in terms of a single ._invoke method.
+    function defineIteratorMethods(prototype) {
+      ["next", "throw", "return"].forEach(function(method) {
+        prototype[method] = function(arg) {
+          return this._invoke(method, arg);
+        };
+      });
+    }
+
+    exports.isGeneratorFunction = function(genFun) {
+      var ctor = typeof genFun === "function" && genFun.constructor;
+      return ctor
+        ? ctor === GeneratorFunction ||
+          // For the native GeneratorFunction constructor, the best we can
+          // do is to check its .name property.
+          (ctor.displayName || ctor.name) === "GeneratorFunction"
+        : false;
+    };
+
+    exports.mark = function(genFun) {
+      if (Object.setPrototypeOf) {
+        Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
+      } else {
+        genFun.__proto__ = GeneratorFunctionPrototype;
+        if (!(toStringTagSymbol in genFun)) {
+          genFun[toStringTagSymbol] = "GeneratorFunction";
+        }
+      }
+      genFun.prototype = Object.create(Gp);
+      return genFun;
+    };
+
+    // Within the body of any async function, `await x` is transformed to
+    // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
+    // `hasOwn.call(value, "__await")` to determine if the yielded value is
+    // meant to be awaited.
+    exports.awrap = function(arg) {
+      return { __await: arg };
+    };
+
+    function AsyncIterator(generator) {
+      function invoke(method, arg, resolve, reject) {
+        var record = tryCatch(generator[method], generator, arg);
+        if (record.type === "throw") {
+          reject(record.arg);
+        } else {
+          var result = record.arg;
+          var value = result.value;
+          if (value &&
+              typeof value === "object" &&
+              hasOwn.call(value, "__await")) {
+            return Promise.resolve(value.__await).then(function(value) {
+              invoke("next", value, resolve, reject);
+            }, function(err) {
+              invoke("throw", err, resolve, reject);
+            });
+          }
+
+          return Promise.resolve(value).then(function(unwrapped) {
+            // When a yielded Promise is resolved, its final value becomes
+            // the .value of the Promise<{value,done}> result for the
+            // current iteration.
+            result.value = unwrapped;
+            resolve(result);
+          }, function(error) {
+            // If a rejected Promise was yielded, throw the rejection back
+            // into the async generator function so it can be handled there.
+            return invoke("throw", error, resolve, reject);
+          });
+        }
+      }
+
+      var previousPromise;
+
+      function enqueue(method, arg) {
+        function callInvokeWithMethodAndArg() {
+          return new Promise(function(resolve, reject) {
+            invoke(method, arg, resolve, reject);
+          });
+        }
+
+        return previousPromise =
+          // If enqueue has been called before, then we want to wait until
+          // all previous Promises have been resolved before calling invoke,
+          // so that results are always delivered in the correct order. If
+          // enqueue has not been called before, then it is important to
+          // call invoke immediately, without waiting on a callback to fire,
+          // so that the async generator function has the opportunity to do
+          // any necessary setup in a predictable way. This predictability
+          // is why the Promise constructor synchronously invokes its
+          // executor callback, and why async functions synchronously
+          // execute code before the first await. Since we implement simple
+          // async functions in terms of async generators, it is especially
+          // important to get this right, even though it requires care.
+          previousPromise ? previousPromise.then(
+            callInvokeWithMethodAndArg,
+            // Avoid propagating failures to Promises returned by later
+            // invocations of the iterator.
+            callInvokeWithMethodAndArg
+          ) : callInvokeWithMethodAndArg();
+      }
+
+      // Define the unified helper method that is used to implement .next,
+      // .throw, and .return (see defineIteratorMethods).
+      this._invoke = enqueue;
+    }
+
+    defineIteratorMethods(AsyncIterator.prototype);
+    AsyncIterator.prototype[asyncIteratorSymbol] = function () {
+      return this;
+    };
+    exports.AsyncIterator = AsyncIterator;
+
+    // Note that simple async functions are implemented on top of
+    // AsyncIterator objects; they just return a Promise for the value of
+    // the final result produced by the iterator.
+    exports.async = function(innerFn, outerFn, self, tryLocsList) {
+      var iter = new AsyncIterator(
+        wrap(innerFn, outerFn, self, tryLocsList)
+      );
+
+      return exports.isGeneratorFunction(outerFn)
+        ? iter // If outerFn is a generator, return the full iterator.
+        : iter.next().then(function(result) {
+            return result.done ? result.value : iter.next();
+          });
+    };
+
+    function makeInvokeMethod(innerFn, self, context) {
+      var state = GenStateSuspendedStart;
+
+      return function invoke(method, arg) {
+        if (state === GenStateExecuting) {
+          throw new Error("Generator is already running");
+        }
+
+        if (state === GenStateCompleted) {
+          if (method === "throw") {
+            throw arg;
+          }
+
+          // Be forgiving, per 25.3.3.3.3 of the spec:
+          // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
+          return doneResult();
+        }
+
+        context.method = method;
+        context.arg = arg;
+
+        while (true) {
+          var delegate = context.delegate;
+          if (delegate) {
+            var delegateResult = maybeInvokeDelegate(delegate, context);
+            if (delegateResult) {
+              if (delegateResult === ContinueSentinel) continue;
+              return delegateResult;
+            }
+          }
+
+          if (context.method === "next") {
+            // Setting context._sent for legacy support of Babel's
+            // function.sent implementation.
+            context.sent = context._sent = context.arg;
+
+          } else if (context.method === "throw") {
+            if (state === GenStateSuspendedStart) {
+              state = GenStateCompleted;
+              throw context.arg;
+            }
+
+            context.dispatchException(context.arg);
+
+          } else if (context.method === "return") {
+            context.abrupt("return", context.arg);
+          }
+
+          state = GenStateExecuting;
+
+          var record = tryCatch(innerFn, self, context);
+          if (record.type === "normal") {
+            // If an exception is thrown from innerFn, we leave state ===
+            // GenStateExecuting and loop back for another invocation.
+            state = context.done
+              ? GenStateCompleted
+              : GenStateSuspendedYield;
+
+            if (record.arg === ContinueSentinel) {
+              continue;
+            }
+
+            return {
+              value: record.arg,
+              done: context.done
+            };
+
+          } else if (record.type === "throw") {
+            state = GenStateCompleted;
+            // Dispatch the exception by looping back around to the
+            // context.dispatchException(context.arg) call above.
+            context.method = "throw";
+            context.arg = record.arg;
+          }
+        }
+      };
+    }
+
+    // Call delegate.iterator[context.method](context.arg) and handle the
+    // result, either by returning a { value, done } result from the
+    // delegate iterator, or by modifying context.method and context.arg,
+    // setting context.delegate to null, and returning the ContinueSentinel.
+    function maybeInvokeDelegate(delegate, context) {
+      var method = delegate.iterator[context.method];
+      if (method === undefined$1) {
+        // A .throw or .return when the delegate iterator has no .throw
+        // method always terminates the yield* loop.
+        context.delegate = null;
+
+        if (context.method === "throw") {
+          // Note: ["return"] must be used for ES3 parsing compatibility.
+          if (delegate.iterator["return"]) {
+            // If the delegate iterator has a return method, give it a
+            // chance to clean up.
+            context.method = "return";
+            context.arg = undefined$1;
+            maybeInvokeDelegate(delegate, context);
+
+            if (context.method === "throw") {
+              // If maybeInvokeDelegate(context) changed context.method from
+              // "return" to "throw", let that override the TypeError below.
+              return ContinueSentinel;
+            }
+          }
+
+          context.method = "throw";
+          context.arg = new TypeError(
+            "The iterator does not provide a 'throw' method");
+        }
+
+        return ContinueSentinel;
+      }
+
+      var record = tryCatch(method, delegate.iterator, context.arg);
+
+      if (record.type === "throw") {
+        context.method = "throw";
+        context.arg = record.arg;
+        context.delegate = null;
+        return ContinueSentinel;
+      }
+
+      var info = record.arg;
+
+      if (! info) {
+        context.method = "throw";
+        context.arg = new TypeError("iterator result is not an object");
+        context.delegate = null;
+        return ContinueSentinel;
+      }
+
+      if (info.done) {
+        // Assign the result of the finished delegate to the temporary
+        // variable specified by delegate.resultName (see delegateYield).
+        context[delegate.resultName] = info.value;
+
+        // Resume execution at the desired location (see delegateYield).
+        context.next = delegate.nextLoc;
+
+        // If context.method was "throw" but the delegate handled the
+        // exception, let the outer generator proceed normally. If
+        // context.method was "next", forget context.arg since it has been
+        // "consumed" by the delegate iterator. If context.method was
+        // "return", allow the original .return call to continue in the
+        // outer generator.
+        if (context.method !== "return") {
+          context.method = "next";
+          context.arg = undefined$1;
+        }
+
+      } else {
+        // Re-yield the result returned by the delegate method.
+        return info;
+      }
+
+      // The delegate iterator is finished, so forget it and continue with
+      // the outer generator.
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    // Define Generator.prototype.{next,throw,return} in terms of the
+    // unified ._invoke helper method.
+    defineIteratorMethods(Gp);
+
+    Gp[toStringTagSymbol] = "Generator";
+
+    // A Generator should always return itself as the iterator object when the
+    // @@iterator function is called on it. Some browsers' implementations of the
+    // iterator prototype chain incorrectly implement this, causing the Generator
+    // object to not be returned from this call. This ensures that doesn't happen.
+    // See https://github.com/facebook/regenerator/issues/274 for more details.
+    Gp[iteratorSymbol] = function() {
+      return this;
+    };
+
+    Gp.toString = function() {
+      return "[object Generator]";
+    };
+
+    function pushTryEntry(locs) {
+      var entry = { tryLoc: locs[0] };
+
+      if (1 in locs) {
+        entry.catchLoc = locs[1];
+      }
+
+      if (2 in locs) {
+        entry.finallyLoc = locs[2];
+        entry.afterLoc = locs[3];
+      }
+
+      this.tryEntries.push(entry);
+    }
+
+    function resetTryEntry(entry) {
+      var record = entry.completion || {};
+      record.type = "normal";
+      delete record.arg;
+      entry.completion = record;
+    }
+
+    function Context(tryLocsList) {
+      // The root entry object (effectively a try statement without a catch
+      // or a finally block) gives us a place to store values thrown from
+      // locations where there is no enclosing try statement.
+      this.tryEntries = [{ tryLoc: "root" }];
+      tryLocsList.forEach(pushTryEntry, this);
+      this.reset(true);
+    }
+
+    exports.keys = function(object) {
+      var keys = [];
+      for (var key in object) {
+        keys.push(key);
+      }
+      keys.reverse();
+
+      // Rather than returning an object with a next method, we keep
+      // things simple and return the next function itself.
+      return function next() {
+        while (keys.length) {
+          var key = keys.pop();
+          if (key in object) {
+            next.value = key;
+            next.done = false;
+            return next;
+          }
+        }
+
+        // To avoid creating an additional object, we just hang the .value
+        // and .done properties off the next function object itself. This
+        // also ensures that the minifier will not anonymize the function.
+        next.done = true;
+        return next;
+      };
+    };
+
+    function values(iterable) {
+      if (iterable) {
+        var iteratorMethod = iterable[iteratorSymbol];
+        if (iteratorMethod) {
+          return iteratorMethod.call(iterable);
+        }
+
+        if (typeof iterable.next === "function") {
+          return iterable;
+        }
+
+        if (!isNaN(iterable.length)) {
+          var i = -1, next = function next() {
+            while (++i < iterable.length) {
+              if (hasOwn.call(iterable, i)) {
+                next.value = iterable[i];
+                next.done = false;
+                return next;
+              }
+            }
+
+            next.value = undefined$1;
+            next.done = true;
+
+            return next;
+          };
+
+          return next.next = next;
+        }
+      }
+
+      // Return an iterator with no values.
+      return { next: doneResult };
+    }
+    exports.values = values;
+
+    function doneResult() {
+      return { value: undefined$1, done: true };
+    }
+
+    Context.prototype = {
+      constructor: Context,
+
+      reset: function(skipTempReset) {
+        this.prev = 0;
+        this.next = 0;
+        // Resetting context._sent for legacy support of Babel's
+        // function.sent implementation.
+        this.sent = this._sent = undefined$1;
+        this.done = false;
+        this.delegate = null;
+
+        this.method = "next";
+        this.arg = undefined$1;
+
+        this.tryEntries.forEach(resetTryEntry);
+
+        if (!skipTempReset) {
+          for (var name in this) {
+            // Not sure about the optimal order of these conditions:
+            if (name.charAt(0) === "t" &&
+                hasOwn.call(this, name) &&
+                !isNaN(+name.slice(1))) {
+              this[name] = undefined$1;
+            }
+          }
+        }
+      },
+
+      stop: function() {
+        this.done = true;
+
+        var rootEntry = this.tryEntries[0];
+        var rootRecord = rootEntry.completion;
+        if (rootRecord.type === "throw") {
+          throw rootRecord.arg;
+        }
+
+        return this.rval;
+      },
+
+      dispatchException: function(exception) {
+        if (this.done) {
+          throw exception;
+        }
+
+        var context = this;
+        function handle(loc, caught) {
+          record.type = "throw";
+          record.arg = exception;
+          context.next = loc;
+
+          if (caught) {
+            // If the dispatched exception was caught by a catch block,
+            // then let that catch block handle the exception normally.
+            context.method = "next";
+            context.arg = undefined$1;
+          }
+
+          return !! caught;
+        }
+
+        for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+          var entry = this.tryEntries[i];
+          var record = entry.completion;
+
+          if (entry.tryLoc === "root") {
+            // Exception thrown outside of any try block that could handle
+            // it, so set the completion value of the entire function to
+            // throw the exception.
+            return handle("end");
+          }
+
+          if (entry.tryLoc <= this.prev) {
+            var hasCatch = hasOwn.call(entry, "catchLoc");
+            var hasFinally = hasOwn.call(entry, "finallyLoc");
+
+            if (hasCatch && hasFinally) {
+              if (this.prev < entry.catchLoc) {
+                return handle(entry.catchLoc, true);
+              } else if (this.prev < entry.finallyLoc) {
+                return handle(entry.finallyLoc);
+              }
+
+            } else if (hasCatch) {
+              if (this.prev < entry.catchLoc) {
+                return handle(entry.catchLoc, true);
+              }
+
+            } else if (hasFinally) {
+              if (this.prev < entry.finallyLoc) {
+                return handle(entry.finallyLoc);
+              }
+
+            } else {
+              throw new Error("try statement without catch or finally");
+            }
+          }
+        }
+      },
+
+      abrupt: function(type, arg) {
+        for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+          var entry = this.tryEntries[i];
+          if (entry.tryLoc <= this.prev &&
+              hasOwn.call(entry, "finallyLoc") &&
+              this.prev < entry.finallyLoc) {
+            var finallyEntry = entry;
+            break;
+          }
+        }
+
+        if (finallyEntry &&
+            (type === "break" ||
+             type === "continue") &&
+            finallyEntry.tryLoc <= arg &&
+            arg <= finallyEntry.finallyLoc) {
+          // Ignore the finally entry if control is not jumping to a
+          // location outside the try/catch block.
+          finallyEntry = null;
+        }
+
+        var record = finallyEntry ? finallyEntry.completion : {};
+        record.type = type;
+        record.arg = arg;
+
+        if (finallyEntry) {
+          this.method = "next";
+          this.next = finallyEntry.finallyLoc;
+          return ContinueSentinel;
+        }
+
+        return this.complete(record);
+      },
+
+      complete: function(record, afterLoc) {
+        if (record.type === "throw") {
+          throw record.arg;
+        }
+
+        if (record.type === "break" ||
+            record.type === "continue") {
+          this.next = record.arg;
+        } else if (record.type === "return") {
+          this.rval = this.arg = record.arg;
+          this.method = "return";
+          this.next = "end";
+        } else if (record.type === "normal" && afterLoc) {
+          this.next = afterLoc;
+        }
+
+        return ContinueSentinel;
+      },
+
+      finish: function(finallyLoc) {
+        for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+          var entry = this.tryEntries[i];
+          if (entry.finallyLoc === finallyLoc) {
+            this.complete(entry.completion, entry.afterLoc);
+            resetTryEntry(entry);
+            return ContinueSentinel;
+          }
+        }
+      },
+
+      "catch": function(tryLoc) {
+        for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+          var entry = this.tryEntries[i];
+          if (entry.tryLoc === tryLoc) {
+            var record = entry.completion;
+            if (record.type === "throw") {
+              var thrown = record.arg;
+              resetTryEntry(entry);
+            }
+            return thrown;
+          }
+        }
+
+        // The context.catch method must only be called with a location
+        // argument that corresponds to a known catch block.
+        throw new Error("illegal catch attempt");
+      },
+
+      delegateYield: function(iterable, resultName, nextLoc) {
+        this.delegate = {
+          iterator: values(iterable),
+          resultName: resultName,
+          nextLoc: nextLoc
+        };
+
+        if (this.method === "next") {
+          // Deliberately forget the last sent value so that we don't
+          // accidentally pass it on to the delegate.
+          this.arg = undefined$1;
+        }
+
+        return ContinueSentinel;
+      }
+    };
+
+    // Regardless of whether this script is executing as a CommonJS module
+    // or not, return the runtime object so that we can declare the variable
+    // regeneratorRuntime in the outer scope, which allows this module to be
+    // injected easily by `bin/regenerator --include-runtime script.js`.
+    return exports;
+
+  }(
+    // If this script is executing as a CommonJS module, use module.exports
+    // as the regeneratorRuntime namespace. Otherwise create a new empty
+    // object. Either way, the resulting object will be used to initialize
+    // the regeneratorRuntime variable at the top of this file.
+    module.exports
+  ));
+
+  try {
+    regeneratorRuntime = runtime;
+  } catch (accidentalStrictMode) {
+    // This module should not be running in strict mode, so the above
+    // assignment should always work unless something is misconfigured. Just
+    // in case runtime.js accidentally runs in strict mode, we can escape
+    // strict mode using a global Function call. This could conceivably fail
+    // if a Content Security Policy forbids using Function, but in that case
+    // the proper solution is to fix the accidental strict mode problem. If
+    // you've misconfigured your bundler to force strict mode and applied a
+    // CSP to forbid Function, and you're not willing to fix either of those
+    // problems, please detail your unique predicament in a GitHub issue.
+    Function("r", "regeneratorRuntime = r")(runtime);
+  }
+  });
+
+  var regenerator = runtime_1;
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+    try {
+      var info = gen[key](arg);
+      var value = info.value;
+    } catch (error) {
+      reject(error);
+      return;
+    }
+
+    if (info.done) {
+      resolve(value);
+    } else {
+      Promise.resolve(value).then(_next, _throw);
+    }
+  }
+
+  function _asyncToGenerator(fn) {
+    return function () {
+      var self = this,
+          args = arguments;
+      return new Promise(function (resolve, reject) {
+        var gen = fn.apply(self, args);
+
+        function _next(value) {
+          asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+        }
+
+        function _throw(err) {
+          asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+        }
+
+        _next(undefined);
+      });
+    };
+  }
+
+  var asyncToGenerator = _asyncToGenerator;
+
+  var access_token_source = "debug";
+  var access_token_url = "用户自定义 access_token 请求接口";
+  var appid = "<appid>";
+  var secret = "<secret>";
+  var config = {
+  	access_token_source: access_token_source,
+  	access_token_url: access_token_url,
+  	appid: appid,
+  	secret: secret
+  };
+
+  var crypt = createCommonjsModule(function (module) {
+  (function () {
+    var base64map = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/',
+        crypt = {
+      // Bit-wise rotation left
+      rotl: function (n, b) {
+        return n << b | n >>> 32 - b;
+      },
+      // Bit-wise rotation right
+      rotr: function (n, b) {
+        return n << 32 - b | n >>> b;
+      },
+      // Swap big-endian to little-endian and vice versa
+      endian: function (n) {
+        // If number given, swap endian
+        if (n.constructor == Number) {
+          return crypt.rotl(n, 8) & 0x00FF00FF | crypt.rotl(n, 24) & 0xFF00FF00;
+        } // Else, assume array and swap all items
+
+
+        for (var i = 0; i < n.length; i++) n[i] = crypt.endian(n[i]);
+
+        return n;
+      },
+      // Generate an array of any length of random bytes
+      randomBytes: function (n) {
+        for (var bytes = []; n > 0; n--) bytes.push(Math.floor(Math.random() * 256));
+
+        return bytes;
+      },
+      // Convert a byte array to big-endian 32-bit words
+      bytesToWords: function (bytes) {
+        for (var words = [], i = 0, b = 0; i < bytes.length; i++, b += 8) words[b >>> 5] |= bytes[i] << 24 - b % 32;
+
+        return words;
+      },
+      // Convert big-endian 32-bit words to a byte array
+      wordsToBytes: function (words) {
+        for (var bytes = [], b = 0; b < words.length * 32; b += 8) bytes.push(words[b >>> 5] >>> 24 - b % 32 & 0xFF);
+
+        return bytes;
+      },
+      // Convert a byte array to a hex string
+      bytesToHex: function (bytes) {
+        for (var hex = [], i = 0; i < bytes.length; i++) {
+          hex.push((bytes[i] >>> 4).toString(16));
+          hex.push((bytes[i] & 0xF).toString(16));
+        }
+
+        return hex.join('');
+      },
+      // Convert a hex string to a byte array
+      hexToBytes: function (hex) {
+        for (var bytes = [], c = 0; c < hex.length; c += 2) bytes.push(parseInt(hex.substr(c, 2), 16));
+
+        return bytes;
+      },
+      // Convert a byte array to a base-64 string
+      bytesToBase64: function (bytes) {
+        for (var base64 = [], i = 0; i < bytes.length; i += 3) {
+          var triplet = bytes[i] << 16 | bytes[i + 1] << 8 | bytes[i + 2];
+
+          for (var j = 0; j < 4; j++) if (i * 8 + j * 6 <= bytes.length * 8) base64.push(base64map.charAt(triplet >>> 6 * (3 - j) & 0x3F));else base64.push('=');
+        }
+
+        return base64.join('');
+      },
+      // Convert a base-64 string to a byte array
+      base64ToBytes: function (base64) {
+        // Remove non-base-64 characters
+        base64 = base64.replace(/[^A-Z0-9+\/]/ig, '');
+
+        for (var bytes = [], i = 0, imod4 = 0; i < base64.length; imod4 = ++i % 4) {
+          if (imod4 == 0) continue;
+          bytes.push((base64map.indexOf(base64.charAt(i - 1)) & Math.pow(2, -2 * imod4 + 8) - 1) << imod4 * 2 | base64map.indexOf(base64.charAt(i)) >>> 6 - imod4 * 2);
+        }
+
+        return bytes;
+      }
+    };
+    module.exports = crypt;
+  })();
+  });
+
+  var charenc = {
+    // UTF-8 encoding
+    utf8: {
+      // Convert a string to a byte array
+      stringToBytes: function (str) {
+        return charenc.bin.stringToBytes(unescape(encodeURIComponent(str)));
+      },
+      // Convert a byte array to a string
+      bytesToString: function (bytes) {
+        return decodeURIComponent(escape(charenc.bin.bytesToString(bytes)));
+      }
+    },
+    // Binary encoding
+    bin: {
+      // Convert a string to a byte array
+      stringToBytes: function (str) {
+        for (var bytes = [], i = 0; i < str.length; i++) bytes.push(str.charCodeAt(i) & 0xFF);
+
+        return bytes;
+      },
+      // Convert a byte array to a string
+      bytesToString: function (bytes) {
+        for (var str = [], i = 0; i < bytes.length; i++) str.push(String.fromCharCode(bytes[i]));
+
+        return str.join('');
+      }
+    }
+  };
+  var charenc_1 = charenc;
+
+  var sha1 = createCommonjsModule(function (module) {
+  (function () {
+    var crypt$1 = crypt,
+        utf8 = charenc_1.utf8,
+        bin = charenc_1.bin,
+        // The core
+    sha1 = function (message) {
+      // Convert to byte array
+      if (message.constructor == String) message = utf8.stringToBytes(message);else if (typeof Buffer !== 'undefined' && typeof Buffer.isBuffer == 'function' && Buffer.isBuffer(message)) message = Array.prototype.slice.call(message, 0);else if (!Array.isArray(message)) message = message.toString(); // otherwise assume byte array
+
+      var m = crypt$1.bytesToWords(message),
+          l = message.length * 8,
+          w = [],
+          H0 = 1732584193,
+          H1 = -271733879,
+          H2 = -1732584194,
+          H3 = 271733878,
+          H4 = -1009589776; // Padding
+
+      m[l >> 5] |= 0x80 << 24 - l % 32;
+      m[(l + 64 >>> 9 << 4) + 15] = l;
+
+      for (var i = 0; i < m.length; i += 16) {
+        var a = H0,
+            b = H1,
+            c = H2,
+            d = H3,
+            e = H4;
+
+        for (var j = 0; j < 80; j++) {
+          if (j < 16) w[j] = m[i + j];else {
+            var n = w[j - 3] ^ w[j - 8] ^ w[j - 14] ^ w[j - 16];
+            w[j] = n << 1 | n >>> 31;
+          }
+          var t = (H0 << 5 | H0 >>> 27) + H4 + (w[j] >>> 0) + (j < 20 ? (H1 & H2 | ~H1 & H3) + 1518500249 : j < 40 ? (H1 ^ H2 ^ H3) + 1859775393 : j < 60 ? (H1 & H2 | H1 & H3 | H2 & H3) - 1894007588 : (H1 ^ H2 ^ H3) - 899497514);
+          H4 = H3;
+          H3 = H2;
+          H2 = H1 << 30 | H1 >>> 2;
+          H1 = H0;
+          H0 = t;
+        }
+
+        H0 += a;
+        H1 += b;
+        H2 += c;
+        H3 += d;
+        H4 += e;
+      }
+
+      return [H0, H1, H2, H3, H4];
+    },
+        // Public API
+    api = function (message, options) {
+      var digestbytes = crypt$1.wordsToBytes(sha1(message));
+      return options && options.asBytes ? digestbytes : options && options.asString ? bin.bytesToString(digestbytes) : crypt$1.bytesToHex(digestbytes);
+    };
+
+    api._blocksize = 16;
+    api._digestsize = 20;
+    module.exports = api;
+  })();
+  });
+
+  var apilist = {
+    miniProgram: ['navigateBack', 'navigateTo', 'redirectTo', 'switchTab', 'reLaunch', 'postMessage', 'getEnv'],
+    base: ['startRecord', 'stopRecord', 'onVoiceRecordEnd', 'playVoice', 'pauseVoice', 'stopVoice', 'onVoicePlayEnd', 'uploadVoice', 'downloadVoice', 'chooseImage', 'previewImage', 'uploadImage', 'downloadImage', 'getLocalImgData', 'translateVoice', 'getNetworkType', 'openLocation', 'getLocation', 'scanQRCode']
+  };
+
+  // const defaultTicketServer = 'https://mdoctor.yonyoucloud.com/wechat/api/getticket'
+
+  var defaultTicketServer = 'http://10.3.13.9:88/wechat/api/getticket';
+  var wx_permissionStatus = 0;
+  var wx = window.wx; // http 请求
+
+  function httpGet(url) {
+    return new Promise(function (resolve, reject) {
+      var request = new XMLHttpRequest();
+
+      request.onreadystatechange = function () {
+        if (request.readyState === 4) {
+          if (request.status === 200) {
+            return resolve(request.responseText);
+          } else {
+            return reject(request.status);
+          }
+        }
+      };
+
+      request.open('GET', url);
+      request.send();
+    });
+  }
+
+  function getTicket(_ref) {
+    var source = _ref.access_token_source,
+        url = _ref.access_token_url,
+        appid = _ref.appid,
+        secret = _ref.secret;
+    return new Promise(function (resolve, reject) {
+      if (source == 'debug') {
+        url = defaultTicketServer + "?access_token_source=debug";
+      } else if (source == 'secret') {
+        url = defaultTicketServer + "?access_token_source=secret&appid=" + appid + "&secret=" + secret;
+      }
+
+      httpGet(url).then(resolve).catch(reject); // request(url, function (error, response, body) {
+      //   let statusCode = response && response.statusCode
+      //   if (statusCode == 200) {
+      //     response(body)
+      //   }
+      //   else {
+      //     reject(error)
+      //   }
+      // });
+    });
+  } // 请求微信 jssdk 权限
+
+
+  function configPermission() {
+    return _configPermission.apply(this, arguments);
+  }
+
+  function _configPermission() {
+    _configPermission = asyncToGenerator(
+    /*#__PURE__*/
+    regenerator.mark(function _callee() {
+      var res, _JSON$parse, status, msg, data, appid, ticket, url, nonceStr, timestamp, encodingStr, signature;
+
+      return regenerator.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return getTicket(config);
+
+            case 2:
+              res = _context.sent;
+              _JSON$parse = JSON.parse(res), status = _JSON$parse.status, msg = _JSON$parse.msg, data = _JSON$parse.data;
+
+              if (!(status == 0)) {
+                _context.next = 6;
+                break;
+              }
+
+              return _context.abrupt("return", false);
+
+            case 6:
+              appid = data.appid, ticket = data.ticket;
+              url = document.URL;
+              nonceStr = 'Wm3WZYTPz0wzccnW';
+              timestamp = new Date().getTime();
+              encodingStr = "jsapi_ticket=" + ticket + "&noncestr=" + nonceStr + "&timestamp=" + timestamp + "&url=" + url;
+              signature = sha1(encodingStr);
+              return _context.abrupt("return", new Promise(function (resolve, reject) {
+                wx.config({
+                  debug: false,
+                  appId: appid,
+                  timestamp: timestamp,
+                  nonceStr: nonceStr,
+                  signature: signature,
+                  jsApiList: apilist.base // 必填，需要使用的JS接口列表
+
+                });
+                wx.ready(resolve);
+                wx.error(reject);
+              }));
+
+            case 13:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+    return _configPermission.apply(this, arguments);
+  }
+
+  function load() {
+    var apiObjects = apilist.base.map(function (api) {
+      return {
+        api: api,
+        fn: function fn(obj) {
+          var fn = wx[api];
+          var status = wx_permissionStatus || 0; // 0.初始状态;1.成功;-1:失败;
+
+          if (status == 1) {
+            fn(obj);
+          } else {
+            configPermission().then(function () {
+              wx_permissionStatus = 1;
+              fn(obj);
+            }).catch(function (err) {
+              wx_permissionStatus = -1;
+
+              if (obj.error) {
+                obj.error(err);
+              }
+            });
+          }
+        }
+      };
+    });
+    apiObjects = Object.assign(apiObjects, apilist.miniProgram.map(function (api) {
+      return {
+        api: api,
+        fn: wx.miniProgram[api]
+      };
+    }));
+    return apiObjects;
+  }
+
+  var apiObjects = load();
+
+  var MTL =
+  /*#__PURE__*/
+  function () {
+    function MTL() {
+      this.apilist = [];
+      this.platform = platform;
+    }
+
+    var _proto = MTL.prototype;
+
+    _proto.register = function register(_ref) {
+      var api = _ref.api,
+          _ref$platform = _ref.platform,
+          platform = _ref$platform === void 0 ? 'all' : _ref$platform,
+          _ref$symbolPath = _ref.symbolPath,
+          symbolPath = _ref$symbolPath === void 0 ? null : _ref$symbolPath,
+          fn = _ref.fn;
+
+      if (platform != 'all' && platform != this.platform) {
+        return;
+      }
+
+      if (this.apilist[api]) {
+        throw new Error("api \"" + api + "\" already exists!");
+      }
+
+      this.apilist[api] = fn;
+
+      if (symbolPath) ; else {
+        mtl[api] = fn;
+      }
+    };
+
+    return MTL;
+  }();
+
+  var mtl = new MTL();
+
+  (function () {
+    switch (platform) {
+      case 'wx':
+        window.wx_apilist = apiObjects;
+
+        for (var _iterator = apiObjects, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+          var _ref2;
+
+          if (_isArray) {
+            if (_i >= _iterator.length) break;
+            _ref2 = _iterator[_i++];
+          } else {
+            _i = _iterator.next();
+            if (_i.done) break;
+            _ref2 = _i.value;
+          }
+
+          var obj = _ref2;
+          mtl.register(obj);
+        }
+
+        break;
+
+      case 'ios':
+        break;
+
+      case 'android':
+        break;
+
+      case 'h5':
+        break;
+    }
+  })();
+
+  return mtl;
+
+}));

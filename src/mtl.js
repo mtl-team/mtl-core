@@ -1,83 +1,45 @@
-import './summer'
-import './platform/wx/mtl.sha1.bundle'
+import platform from './core/getEnv'
+import wx_apilist from './platform/wx/mtl.wx'
 
-import register from './core/register'
-import { miniProgramApi } from './core/base.apilist'
-import platform from './core/getEnv';
-
-// platform
-import WX_API_LIST from './platform/wx/mtl.wx'
-import IOS_API_LIST from './platform/ios/mtl.ios'
-import ANDROID_API_LIST from './platform/android/mtl.android'
-
-/**
- * MTL JS Loader
- */
 class MTL {
   constructor() {
-    this.isReady = false
-  }
-  /**
-   * 
-   * @param {*} callback 
-   */
-  configPermission(callback) {
-    if (this.isReady) {
-      callback({
-        code: 0,
-        response: '已申请过权限',
-        error: null
-      })
-    }
-    else {
-      this._configPermission().then(res => {
-        callback({
-          code: 0,
-          response: res,
-          error: null
-        })
-        this.isReady = true
-      }).catch(err => {
-        callback({
-          code: 1,
-          response: null,
-          error: err
-        })
-      })
-    }
+    this.apilist = []
+    this.platform = platform
   }
 
-  /**
-   * 
-   */
-  register(){
-    register()
+  register({ api, platform = 'all', symbolPath = null, fn }) {
+    if (platform != 'all' && platform != this.platform) {
+      return
+    }
+    if (this.apilist[api]) {
+      throw new Error(`api "${api}" already exists!`)
+    }
+    this.apilist[api] = fn
+    if (symbolPath) {
+      // TODO:
+    }
+    else {
+      mtl[api] = fn
+    }
   }
 }
 
-let mtl = new MTL()
-
-mtl.configPermission()
-
-// 顶层设计：mtl 上挂载的 API
-miniProgramApi.map((arr, api, i) => {
-  let apilist = null;
-
-  switch(platform){
-    case "ios":
-      apilist = IOS_API_LIST;
-      break;
+let mtl = new MTL();
+(function () {
+  switch (platform) {
     case 'wx':
-      apilist = WX_API_LIST;
-      break;
+      window.wx_apilist = wx_apilist
+      for (let obj of wx_apilist) {
+        mtl.register(obj)
+      }
+      break
+    case 'ios':
+      break
     case 'android':
-      apilist = ANDROID_API_LIST;
-      break;
-    default:
-      break;
+      break
+    case 'h5':
+      break
   }
-
-  mtl[api] = apilist[api];
-})
+})();
 
 export default mtl
