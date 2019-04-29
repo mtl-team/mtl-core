@@ -28,4 +28,7 @@ let platform = (function () {
   return platform
 })()
 
+// export const isAlipay = false;
+// export const isWebApp = false;
+
 export default platform
