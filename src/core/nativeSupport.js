@@ -14,7 +14,7 @@ function nativeTransformArgs(args) {
       msg: rs && rs.msg,
       data: data
     }
-    if (rs.code == 1) {
+    if (rs && rs.code == 1) {
       args.success(res)
     }
     else {
