@@ -27,6 +27,13 @@ class MTL {
     this.platform = platform
   }
 
+  /**
+   * 扩展 mtl 的 api 
+   * @param {String} api 扩展方法名
+   * @param {String} platform 扩展平台: all|ios|android|h5;
+   * @param {String} symbolPath 扩展方法绑定字段，例如 api = 'm1', symbolPath = 'xx' 则注册完后调用方式为 mtl.xx.m1。
+   * @param {Function} fn 扩展方法绑定字段
+   */
   register({ api, platform = 'all', symbolPath = null, fn }) {
     if (platform != 'all' && platform != this.platform) {
       return
