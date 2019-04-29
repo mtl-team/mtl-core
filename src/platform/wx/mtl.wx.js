@@ -1,7 +1,7 @@
 
 import config from './mtl.wx.config.json'
 import sha1 from 'sha1'
-import apilist from './mtl.wx.apilist'
+import wx_apilist from './mtl.wx.apilist'
 
 // 请求微信 ticket 默认接口
 // const defaultTicketServer = 'https://mdoctor.yonyoucloud.com/wechat/api/getticket'
@@ -11,26 +11,26 @@ let wx_permissionStatus = 0
 let wx = window.wx
 
 // http 请求
-  function httpGet(url) {
-    return new Promise((resolve, reject) => {
-      let request = new XMLHttpRequest();
-      request.onreadystatechange = function () {
-        if (request.readyState === 4) {
-          if (request.status === 200) {
-            return resolve(request.responseText);
-          }
-          else {
-            return reject(request.status);
-          }
+function httpGet(url) {
+  return new Promise((resolve, reject) => {
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
+      if (request.readyState === 4) {
+        if (request.status === 200) {
+          return resolve(request.responseText);
         }
         else {
-          // HTTP请求还在继续...
+          return reject(request.status);
         }
       }
-      request.open('GET', url);
-      request.send();
-    });
-  }
+      else {
+        // HTTP请求还在继续...
+      }
+    }
+    request.open('GET', url);
+    request.send();
+  });
+}
 
 function loadJsFile(src) {
   return new Promise(resolve => {
@@ -75,46 +75,41 @@ async function configPermission() {
       timestamp: timestamp,
       nonceStr: nonceStr,
       signature: signature,
-      jsApiList: apilist.base // 必填，需要使用的JS接口列表
+      jsApiList: wx_apilist.base // 必填，需要使用的JS接口列表
     });
     wx.ready(resolve);
     wx.error(reject);
   });
 }
 
-function load() {
-  let apiObjects = apilist.base.map(api => {
-    return {
-      api: api,
-      fn: (obj) => {
-        let fn = wx[api]
-        let status = wx_permissionStatus || 0  // 0.初始状态;1.成功;-1:失败;
-        if (status == 1) {
+let apilist = wx_apilist.base.map(api => {
+  return {
+    api: api,
+    fn: (obj) => {
+      let fn = wx[api]
+      let status = wx_permissionStatus || 0  // 0.初始状态;1.成功;-1:失败;
+      if (status == 1) {
+        fn(obj)
+      }
+      else {
+        configPermission().then(() => {
+          wx_permissionStatus = 1
           fn(obj)
-        }
-        else {
-          configPermission().then(() => {
-            wx_permissionStatus = 1
-            fn(obj)
-          }).catch(err => {
-            wx_permissionStatus = -1
-            if (obj.error) {
-              obj.error(err)
-            }            
-          })
-        }
+        }).catch(err => {
+          wx_permissionStatus = -1
+          if (obj.error) {
+            obj.error(err)
+          }
+        })
       }
     }
-  })
-  apiObjects = Object.assign(apiObjects, apilist.miniProgram.map(api => {
-    return {
-      api: api,
-      fn: wx.miniProgram[api]
-    }
-  }))
-  return apiObjects
-}
+  }
+})
+apilist = Object.assign(apilist, wx_apilist.miniProgram.map(api => {
+  return {
+    api: api,
+    fn: wx.miniProgram[api]
+  }
+}))
 
-let apiObjects = load()
-
-export default apiObjects
+export default apilist

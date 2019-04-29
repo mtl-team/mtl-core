@@ -31,7 +31,7 @@
     }
 
     return platform;
-  }();
+  }(); // export const isAlipay = false;
 
   function createCommonjsModule(fn, module) {
   	return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -993,7 +993,7 @@
   })();
   });
 
-  var apilist = {
+  var wx_apilist = {
     miniProgram: ['navigateBack', 'navigateTo', 'redirectTo', 'switchTab', 'reLaunch', 'postMessage', 'getEnv'],
     base: ['startRecord', 'stopRecord', 'onVoiceRecordEnd', 'playVoice', 'pauseVoice', 'stopVoice', 'onVoicePlayEnd', 'uploadVoice', 'downloadVoice', 'chooseImage', 'previewImage', 'uploadImage', 'downloadImage', 'getLocalImgData', 'translateVoice', 'getNetworkType', 'openLocation', 'getLocation', 'scanQRCode']
   };
@@ -1082,7 +1082,7 @@
                   timestamp: timestamp,
                   nonceStr: nonceStr,
                   signature: signature,
-                  jsApiList: apilist.base // 必填，需要使用的JS接口列表
+                  jsApiList: wx_apilist.base // 必填，需要使用的JS接口列表
 
                 });
                 wx.ready(resolve);
@@ -1099,41 +1099,88 @@
     return _configPermission.apply(this, arguments);
   }
 
-  function load() {
-    var apiObjects = apilist.base.map(function (api) {
-      return {
-        api: api,
-        fn: function fn(obj) {
-          var fn = wx[api];
-          var status = wx_permissionStatus || 0; // 0.初始状态;1.成功;-1:失败;
+  var apilist = wx_apilist.base.map(function (api) {
+    return {
+      api: api,
+      fn: function fn(obj) {
+        var fn = wx[api];
+        var status = wx_permissionStatus || 0; // 0.初始状态;1.成功;-1:失败;
 
-          if (status == 1) {
+        if (status == 1) {
+          fn(obj);
+        } else {
+          configPermission().then(function () {
+            wx_permissionStatus = 1;
             fn(obj);
-          } else {
-            configPermission().then(function () {
-              wx_permissionStatus = 1;
-              fn(obj);
-            }).catch(function (err) {
-              wx_permissionStatus = -1;
+          }).catch(function (err) {
+            wx_permissionStatus = -1;
 
-              if (obj.error) {
-                obj.error(err);
-              }
-            });
-          }
+            if (obj.error) {
+              obj.error(err);
+            }
+          });
         }
-      };
-    });
-    apiObjects = Object.assign(apiObjects, apilist.miniProgram.map(function (api) {
-      return {
-        api: api,
-        fn: wx.miniProgram[api]
-      };
-    }));
-    return apiObjects;
-  }
+      }
+    };
+  });
+  apilist = Object.assign(apilist, wx_apilist.miniProgram.map(function (api) {
+    return {
+      api: api,
+      fn: wx.miniProgram[api]
+    };
+  }));
+  var wx_apilist$1 = apilist;
 
-  var apiObjects = load();
+  var apilist$1 = [{
+    api: 'getNetworkType',
+    fn: function fn(obj) {
+      obj.success({
+        'networkType': 'wifi'
+      });
+    }
+  }, {
+    api: 'getLocation',
+    fn: function fn(obj) {
+      obj.success({
+        'latitude': '45',
+        'longitude': '45'
+      });
+    }
+  }];
+
+  var apilist$2 = [{
+    api: 'getNetworkType',
+    fn: function fn(obj) {
+      obj.success({
+        'networkType': 'wifi'
+      });
+    }
+  }, {
+    api: 'getLocation',
+    fn: function fn(obj) {
+      obj.success({
+        'latitude': '45',
+        'longitude': '45'
+      });
+    }
+  }];
+
+  var apilist$3 = [{
+    api: 'getNetworkType',
+    fn: function fn(obj) {
+      obj.success({
+        'networkType': 'wifi'
+      });
+    }
+  }, {
+    api: 'getLocation',
+    fn: function fn(obj) {
+      obj.success({
+        'latitude': '45',
+        'longitude': '45'
+      });
+    }
+  }];
 
   function prepareNamespace(symbolPath, context) {
     if (!symbolPath) {
@@ -1167,6 +1214,14 @@
       this.apilist = [];
       this.platform = platform;
     }
+    /**
+     * 扩展 mtl 的 api 
+     * @param {String} api 扩展方法名
+     * @param {String} platform 扩展平台: all|ios|android|h5;
+     * @param {String} symbolPath 扩展方法绑定字段，例如 api = 'm1', symbolPath = 'xx' 则注册完后调用方式为 mtl.xx.m1。
+     * @param {Function} fn 扩展方法绑定字段
+     */
+
 
     var _proto = MTL.prototype;
 
@@ -1223,42 +1278,40 @@
   var mtl = new MTL();
 
   (function () {
+    var apilist = [];
+
     switch (platform) {
       case 'wx':
-        window.wx_apilist = apiObjects;
-
-        for (var _iterator2 = apiObjects, _isArray2 = Array.isArray(_iterator2), _i3 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
-          var _ref3;
-
-          if (_isArray2) {
-            if (_i3 >= _iterator2.length) break;
-            _ref3 = _iterator2[_i3++];
-          } else {
-            _i3 = _iterator2.next();
-            if (_i3.done) break;
-            _ref3 = _i3.value;
-          }
-
-          var obj = _ref3;
-
-          if (obj.api.startsWith('navigate')) {
-            obj.symbolPath = 'navigator';
-            mtl.register(obj);
-          } else {
-            mtl.register(obj);
-          }
-        }
-
+        apilist = wx_apilist$1;
         break;
 
       case 'ios':
+        apilist = apilist$1;
         break;
 
       case 'android':
+        apilist = apilist$2;
         break;
 
       case 'h5':
+        apilist = apilist$3;
         break;
+    }
+
+    for (var _iterator2 = apilist, _isArray2 = Array.isArray(_iterator2), _i3 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
+      var _ref3;
+
+      if (_isArray2) {
+        if (_i3 >= _iterator2.length) break;
+        _ref3 = _iterator2[_i3++];
+      } else {
+        _i3 = _iterator2.next();
+        if (_i3.done) break;
+        _ref3 = _i3.value;
+      }
+
+      var api = _ref3;
+      mtl.register(api);
     }
   })();
 

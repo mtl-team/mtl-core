@@ -1,35 +1,19 @@
-export default {
-  /**
-   * 
-   * @param {*} object 
-   */
-  getLocation: function (object) {
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          object.success({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          })
-        },
-        function (error) {
-          object.error(error)
-        })
+let apilist = [
+  {
+    api: 'getNetworkType',
+    fn: function (obj) {
+      obj.success({ 'networkType': 'wifi' })
+    }
   },
-  /**
-   * 
-   * @param {*} object 
-   */
-  navigateTo: function (object) {
-      cordova.exec(null, null, "MDDViewPlugin", "login", null)
-  },
-   
-  /**
-   * 
-   * @param {*} object 
-   */
-  _configPermission: function (object) {
-      return new Promise((resolve, reject) => {
-        resolve('iOS 无需授权')
+  {
+    api: 'getLocation',
+    fn: function (obj) {
+      obj.success({
+        'latitude': '45',
+        'longitude': '45'
       })
+    }
   }
-}
+]
+
+export default apilist

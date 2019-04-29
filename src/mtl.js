@@ -1,5 +1,8 @@
 import platform from './core/getEnv'
 import wx_apilist from './platform/wx/mtl.wx'
+import ios_apilist from './platform/ios/mtl.ios'
+import android_apilist from './platform/android/mtl.android'
+import h5_apilist from './platform/h5/mtl.h5'
 
 function prepareNamespace(symbolPath, context) {
   if (!symbolPath) {
@@ -61,19 +64,23 @@ class MTL {
 
 let mtl = new MTL();
 (function () {
+  let apilist = []
   switch (platform) {
     case 'wx':
-      window.wx_apilist = wx_apilist
-      for (let obj of wx_apilist) {
-        mtl.register(obj)
-      }
+      apilist = wx_apilist;
       break
     case 'ios':
+      apilist = ios_apilist;
       break
     case 'android':
+      apilist = android_apilist;
       break
     case 'h5':
+      apilist = h5_apilist;
       break
+  }
+  for (let api of apilist) {
+    mtl.register(api)
   }
 })();
 
