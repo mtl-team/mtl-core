@@ -3,6 +3,7 @@ import wx_apilist from './platform/wx/mtl.wx'
 import ios_apilist from './platform/ios/mtl.ios'
 import android_apilist from './platform/android/mtl.android'
 import h5_apilist from './platform/h5/mtl.h5'
+import { nativeTransformArgs } from './core/nativeSupport'
 
 function prepareNamespace(symbolPath, context) {
   if (!symbolPath) {
@@ -45,6 +46,14 @@ class MTL {
       throw new Error(`api "${api}" already exists!`)
     }
     this.apilist[api] = fn
+    if (this.platform == 'ios' || this.platform == 'android') {
+      // ios 和 android 端需要对参数进行一层处理
+      let originFn = fn;
+      let nativeFn = function (args) {
+        originFn(nativeTransformArgs(args))
+      }
+      fn = nativeFn
+    }
     if (symbolPath) {
       prepareNamespace(symbolPath, mtl)
       let obj = {}

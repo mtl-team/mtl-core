@@ -8,7 +8,7 @@ import uuid from './uuid'
 function nativeTransformArgs(args) {
   args.callback = uuid(8)
   window[args.callback] = function (rs, data) {
-    if (rs.code == 0) {
+    if (rs.code == 1) {
       args.success(data)
     }
     else {
