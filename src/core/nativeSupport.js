@@ -6,15 +6,22 @@ import uuid from './uuid'
  */
 // 
 function nativeTransformArgs(args) {
-  args.callback = uuid(8)
-  window[args.callback] = function (rs, data) {
+  let fnName = uuid(8)
+  args.callback = fnName + '()'
+  window[fnName] = function (rs, data) {
+    let res = {
+      code: rs && rs.code,
+      msg: rs && rs.msg,
+      data: data
+    }
     if (rs.code == 1) {
-      args.success(data)
+      args.success(res)
     }
     else {
-      args.fail(rs)
+      args.fail(res)
     }
-    window[args.callback] = null;
+    args.complete(res)
+    window[fnName] = null;
   }
   return args
 }

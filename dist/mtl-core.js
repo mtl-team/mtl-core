@@ -1194,16 +1194,24 @@
   // 
 
   function nativeTransformArgs(args) {
-    args.callback = uuid(8);
+    var fnName = uuid(8);
+    args.callback = fnName + '()';
 
-    window[args.callback] = function (rs, data) {
+    window[fnName] = function (rs, data) {
+      var res = {
+        code: rs.code,
+        msg: rs.msg,
+        data: data
+      };
+
       if (rs.code == 1) {
-        args.success(data);
+        args.success(res);
       } else {
-        args.fail(rs);
+        args.fail(res);
       }
 
-      window[args.callback] = null;
+      args.complete(res);
+      window[fnName] = null;
     };
 
     return args;
