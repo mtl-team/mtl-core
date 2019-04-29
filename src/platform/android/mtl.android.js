@@ -1,19 +1,13 @@
-let apilist = [
-  {
-    api: 'getNetworkType',
-    fn: function (obj) {
-      obj.success({ 'networkType': 'wifi' })
-    }
-  },
-  {
-    api: 'getLocation',
-    fn: function (obj) {
-      obj.success({
-        'latitude': '45',
-        'longitude': '45'
-      })
-    }
+import android_apilist from './mtl.android.apilist'
+import { nativeTransformArgs } from '../../core/nativeSupport'
+
+let apilist = android_apilist.map(obj => {
+  let originFn = obj.fn;
+  let fn = function (args) {
+    originFn(nativeTransformArgs(args))
   }
-]
+  obj.fn = fn;
+  return obj;
+})
 
 export default apilist
