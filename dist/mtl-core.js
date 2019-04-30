@@ -1199,12 +1199,12 @@
 
     window[fnName] = function (rs, data) {
       var res = {
-        code: rs.code,
-        msg: rs.msg,
+        code: rs && rs.code,
+        msg: rs && rs.msg,
         data: data
       };
 
-      if (rs.code == 1) {
+      if (rs && rs.code == 1) {
         args.success(res);
       } else {
         args.fail(res);
